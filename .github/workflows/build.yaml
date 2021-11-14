@@ -26,4 +26,4 @@ jobs:
           GOOGLE_APPLICATION_CREDENTIALS: /home/runner/packer_sa_key.json
         run: |
           echo ${PACKER_SA_KEY} > /home/runner/packer_sa_key.json
-          packer build -var='ghrunner_version=${GITHUB_REF_NAME}' -var-file='runtime-variables.pkrvars.hcl' .
+          packer build -var='ghrunner_version=$GITHUB_REF_NAME' -var-file='runtime-variables.pkrvars.hcl' .
