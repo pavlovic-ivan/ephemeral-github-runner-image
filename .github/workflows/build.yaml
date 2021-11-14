@@ -2,8 +2,10 @@ name: Packer Build
 
 on:
   push:
-    tags:
-      - v*
+    branches:
+      - main
+    # tags:
+    #   - v*
 env:
   GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.PACKER_SA_KEY }}
 jobs:
@@ -26,5 +28,6 @@ jobs:
         uses: hashicorp/packer-github-actions@master
         with:
           command: build
-          arguments: '-on-error=abort -var=ghrunner_version=${GITHUB_REF_NAME} -var-file=runtime-variables.pkrvars.hcl'
+          # arguments: '-on-error=abort -var=ghrunner_version=${GITHUB_REF_NAME} -var-file=runtime-variables.pkrvars.hcl'
+          arguments: '-on-error=abort -var=ghrunner_version=v2.283.3 -var-file=runtime-variables.pkrvars.hcl'
           target: runner-machine-image.pkr.hcl
