@@ -6,20 +6,29 @@ on:
       - main
     # tags:
     #   - v*
-env:
-  GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.PACKER_SA_KEY }}
 jobs:
+  setup-gcloud:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.PACKER_SA_KEY }}
+          export_default_credentials: true
+
   packer-build:
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout Packer project
         uses: actions/checkout@v2
-      
+
       - name: Packer Installation
         run: |
           curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
           sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
           sudo apt-get update && sudo apt-get install packer
+          touch packer_sa_key.json
       
       - name: Packer Init
         run: |
