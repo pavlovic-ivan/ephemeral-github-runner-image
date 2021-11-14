@@ -42,8 +42,10 @@ jobs:
 
       - name: Build Packer Artifact
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ env.GOOGLE_APPLICATION_CREDENTIALS }}.json
+          PACKER_SA_KEY: ${{ secret.PACKER_SAK_KEY }}
+          GOOGLE_APPLICATION_CREDENTIALS: /home/runner/packer_sa_key.json
         run: |
+          echo ${PACKER_SA_KEY} > /home/runner/packer_sa_key.json
           packer build -var='ghrunner_version=v2.283.3' -var-file='runtime-variables.pkrvars.hcl' .
       
       # # build artifact
