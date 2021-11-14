@@ -41,6 +41,8 @@ jobs:
           packer validate -var=ghrunner_version=v2.283.3 -var-file=runtime-variables.pkrvars.hcl .
 
       - name: Build Packer Artifact
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: $GOOGLE_APPLICATION_CREDENTIALS.json
         run: |
           packer build -var='ghrunner_version=v2.283.3' -var-file='runtime-variables.pkrvars.hcl' .
       
