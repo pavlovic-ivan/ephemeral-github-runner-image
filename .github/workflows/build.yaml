@@ -12,5 +12,6 @@ jobs:
     steps:
       - name: Checkout Pulumi Ephemeral Github Runner project
         uses: actions/checkout@v2
+      - name: Dummy step
         run: |
           echo Done
