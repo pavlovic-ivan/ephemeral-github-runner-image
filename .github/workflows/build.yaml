@@ -16,11 +16,12 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           service_account_key: ${{ secrets.PACKER_SA_KEY }}
           export_default_credentials: true
-          credentials_file_path: $HOME/.config/gcloud/application_default_credentials.json
+          # credentials_file_path: $HOME/.config/gcloud/application_default_credentials.json
 
       - name: Use gcloud CLI
         run: |
           gcloud info
+          ls -la $GOOGLE_APPLICATION_CREDENTIALScredentials_file_path
           ls -la $HOME/.config/gcloud
 
   # packer-build:
