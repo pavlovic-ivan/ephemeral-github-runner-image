@@ -20,6 +20,7 @@ jobs:
       - name: Use gcloud CLI
         run: |
           gcloud info
+          mv $GOOGLE_APPLICATION_CREDENTIALS $GOOGLE_APPLICATION_CREDENTIALS.json
 
       - name: Checkout Packer project
         uses: actions/checkout@v2
