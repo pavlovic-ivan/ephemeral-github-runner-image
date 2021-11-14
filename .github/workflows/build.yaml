@@ -19,6 +19,7 @@ jobs:
 
   packer-build:
     runs-on: ubuntu-18.04
+    needs: [ 'setup-gcloud' ]
     steps:
       - name: Checkout Packer project
         uses: actions/checkout@v2
