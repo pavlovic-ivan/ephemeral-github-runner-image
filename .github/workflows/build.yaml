@@ -21,7 +21,7 @@ jobs:
       - name: Use gcloud CLI
         run: |
           gcloud info
-          cd ${GOOGLE_APPLICATION_CREDENTIALS}
+          cat ${GOOGLE_APPLICATION_CREDENTIALS}
           ls -la
           ls -la $HOME/.config/gcloud
 
