@@ -28,7 +28,7 @@ jobs:
       - name: Packer Validate
         run: |
           packer fmt .
-          packer validate .
+          packer validate -var=ghrunner_version=v2.283.3 -var-file=runtime-variables.pkrvars.hcl .
 
       # # validate templates
       # - name: Validate Template
