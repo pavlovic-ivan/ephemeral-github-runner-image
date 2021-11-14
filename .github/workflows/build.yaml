@@ -32,7 +32,7 @@ jobs:
 
       - name: Build Packer Artifact
         run: |
-          packer build -var='ghrunner_version=v2.283.3' -var-file='runtime-variables.pkrvars.hcl'
+          packer build -var='ghrunner_version=v2.283.3' -var-file='runtime-variables.pkrvars.hcl' runner-machine-image.pkr.hcl
       
       # # build artifact
       # - name: Build Artifact
