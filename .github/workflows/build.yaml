@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-18.04
     steps:
-      - name: Checkout Pulumi Ephemeral Github Runner project
+      - name: Checkout Packer project
         uses: actions/checkout@v2
       - name: Dummy step
         run: |
