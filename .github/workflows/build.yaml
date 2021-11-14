@@ -7,7 +7,7 @@ on:
     # tags:
     #   - v*
 jobs:
-  setup-gcloud:
+  packer-build:
     runs-on: ubuntu-18.04
     steps:
       - name: Set up Cloud SDK
@@ -21,11 +21,6 @@ jobs:
         run: |
           gcloud info
           echo ${GOOGLE_APPLICATION_CREDENTIALS} > $HOME/.config/gcloud/application_default_credentials.json
-
-  packer-build:
-    runs-on: ubuntu-18.04
-    needs: [ 'setup-gcloud' ]
-    steps:
       - name: Checkout Packer project
         uses: actions/checkout@v2
 
