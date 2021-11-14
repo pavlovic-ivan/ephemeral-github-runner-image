@@ -1,4 +1,4 @@
-name: CI
+name: Packer Build
 
 on:
   push:
