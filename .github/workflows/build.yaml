@@ -15,24 +15,30 @@ jobs:
       - name: Checkout Packer project
         uses: actions/checkout@v2
       
-      # packer init
-      - name: Packer Init
+      # packer version
+      - name: Packer Version
         uses: hashicorp/packer-github-actions@master
         with:
-          command: init
-
-      # validate templates
-      - name: Validate Template
-        uses: hashicorp/packer-github-actions@master
-        with:
-          command: validate
-          target: runner-machine-image.pkr.hcl
+          command: version
       
-      # build artifact
-      - name: Build Artifact
-        uses: hashicorp/packer-github-actions@master
-        with:
-          command: build
-          # arguments: '-on-error=abort -var=ghrunner_version=${GITHUB_REF_NAME} -var-file=runtime-variables.pkrvars.hcl'
-          arguments: '-on-error=abort -var=ghrunner_version=v2.283.3 -var-file=runtime-variables.pkrvars.hcl'
-          target: runner-machine-image.pkr.hcl
+      # # packer init
+      # - name: Packer Init
+      #   uses: hashicorp/packer-github-actions@master
+      #   with:
+      #     command: init
+
+      # # validate templates
+      # - name: Validate Template
+      #   uses: hashicorp/packer-github-actions@master
+      #   with:
+      #     command: validate
+      #     target: runner-machine-image.pkr.hcl
+      
+      # # build artifact
+      # - name: Build Artifact
+      #   uses: hashicorp/packer-github-actions@master
+      #   with:
+      #     command: build
+      #     # arguments: '-on-error=abort -var=ghrunner_version=${GITHUB_REF_NAME} -var-file=runtime-variables.pkrvars.hcl'
+      #     arguments: '-on-error=abort -var=ghrunner_version=v2.283.3 -var-file=runtime-variables.pkrvars.hcl'
+      #     target: runner-machine-image.pkr.hcl
