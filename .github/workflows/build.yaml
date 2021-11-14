@@ -22,34 +22,33 @@ jobs:
         run: |
           gcloud info
           echo ${GOOGLE_APPLICATION_CREDENTIALS} > $HOME/.config/gcloud/application_default_credentials.json
-          ls -la $HOME/.config/gcloud
 
-  # packer-build:
-  #   runs-on: ubuntu-18.04
-  #   needs: [ 'setup-gcloud' ]
-  #   steps:
-  #     - name: Checkout Packer project
-  #       uses: actions/checkout@v2
+  packer-build:
+    runs-on: ubuntu-18.04
+    needs: [ 'setup-gcloud' ]
+    steps:
+      - name: Checkout Packer project
+        uses: actions/checkout@v2
 
-  #     - name: Packer Installation
-  #       run: |
-  #         curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-  #         sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-  #         sudo apt-get update && sudo apt-get install packer
-  #         touch packer_sa_key.json
+      - name: Packer Installation
+        run: |
+          curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+          sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+          sudo apt-get update && sudo apt-get install packer
+          touch packer_sa_key.json
       
-  #     - name: Packer Init
-  #       run: |
-  #         packer init .
+      - name: Packer Init
+        run: |
+          packer init .
 
-  #     - name: Packer Validate
-  #       run: |
-  #         packer fmt .
-  #         packer validate -var=ghrunner_version=v2.283.3 -var-file=runtime-variables.pkrvars.hcl .
+      - name: Packer Validate
+        run: |
+          packer fmt .
+          packer validate -var=ghrunner_version=v2.283.3 -var-file=runtime-variables.pkrvars.hcl .
 
-  #     - name: Build Packer Artifact
-  #       run: |
-  #         packer build -var='ghrunner_version=v2.283.3' -var-file='runtime-variables.pkrvars.hcl' .
+      - name: Build Packer Artifact
+        run: |
+          packer build -var='ghrunner_version=v2.283.3' -var-file='runtime-variables.pkrvars.hcl' .
       
       # # build artifact
       # - name: Build Artifact
