@@ -21,8 +21,7 @@ jobs:
       - name: Use gcloud CLI
         run: |
           gcloud info
-          cat ${GOOGLE_APPLICATION_CREDENTIALS}
-          ls -la
+          echo ${GOOGLE_APPLICATION_CREDENTIALS} > $HOME/.config/gcloud/application_default_credentials.json
           ls -la $HOME/.config/gcloud
 
   # packer-build:
