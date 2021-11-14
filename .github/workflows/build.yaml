@@ -30,12 +30,9 @@ jobs:
           packer fmt .
           packer validate -var=ghrunner_version=v2.283.3 -var-file=runtime-variables.pkrvars.hcl .
 
-      # # validate templates
-      # - name: Validate Template
-      #   uses: hashicorp/packer-github-actions@master
-      #   with:
-      #     command: validate
-      #     target: runner-machine-image.pkr.hcl
+      - name: Build Packer Artifact
+        run: |
+          packer build -on-error=abort -var=ghrunner_version=v2.283.3 -var-file=runtime-variables.pkrvars.hcl
       
       # # build artifact
       # - name: Build Artifact
