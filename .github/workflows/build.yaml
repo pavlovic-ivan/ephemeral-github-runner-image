@@ -21,7 +21,6 @@ jobs:
         run: |
           gcloud info
           echo ${GOOGLE_APPLICATION_CREDENTIALS} > $HOME/.config/gcloud/application_default_credentials.json
-          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/.config/gcloud/application_default_credentials.json
 
   packer-build:
     runs-on: ubuntu-18.04
@@ -44,10 +43,12 @@ jobs:
         run: |
           packer fmt .
           packer validate -var=ghrunner_version=v2.283.3 -var-file=runtime-variables.pkrvars.hcl .
-          echo $GOOGLE_APPLICATION_CREDENTIALS
 
       - name: Build Packer Artifact
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: /home/runner/.config/gcloud/application_default_credentials.json
         run: |
+          echo $GOOGLE_APPLICATION_CREDENTIALS
           packer build -var='ghrunner_version=v2.283.3' -var-file='runtime-variables.pkrvars.hcl' .
       
       # # build artifact
