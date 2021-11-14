@@ -16,12 +16,12 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           service_account_key: ${{ secrets.PACKER_SA_KEY }}
           export_default_credentials: true
-          # credentials_file_path: $HOME/.config/gcloud/application_default_credentials.json
 
       - name: Use gcloud CLI
         run: |
           gcloud info
           echo ${GOOGLE_APPLICATION_CREDENTIALS} > $HOME/.config/gcloud/application_default_credentials.json
+          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/.config/gcloud/application_default_credentials.json
 
   packer-build:
     runs-on: ubuntu-18.04
@@ -35,7 +35,6 @@ jobs:
           curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
           sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
           sudo apt-get update && sudo apt-get install packer
-          touch packer_sa_key.json
       
       - name: Packer Init
         run: |
@@ -48,6 +47,7 @@ jobs:
 
       - name: Build Packer Artifact
         run: |
+          echo $GOOGLE_APPLICATION_CREDENTIALS
           packer build -var='ghrunner_version=v2.283.3' -var-file='runtime-variables.pkrvars.hcl' .
       
       # # build artifact
