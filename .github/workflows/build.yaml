@@ -14,4 +14,4 @@ jobs:
         uses: actions/checkout@v2
       - name: Dummy step
         run: |
-          echo Done
+          echo "packer build -var=\"ghrunner_version=${GITHUB_REF_NAME}\" -var-file=\"machine-image.pkrvars.hcl\" runner-machine-image.pkr.hcl"
