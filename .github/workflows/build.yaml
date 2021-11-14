@@ -21,7 +21,8 @@ jobs:
       - name: Use gcloud CLI
         run: |
           gcloud info
-          ls -la ${GOOGLE_APPLICATION_CREDENTIALS}
+          cd ${GOOGLE_APPLICATION_CREDENTIALS}
+          ls -la
           ls -la $HOME/.config/gcloud
 
   # packer-build:
