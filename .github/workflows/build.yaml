@@ -15,19 +15,20 @@ jobs:
       - name: Checkout Packer project
         uses: actions/checkout@v2
       
-      # packer version
       - name: Packer Installation
         run: |
           curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
           sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
           sudo apt-get update && sudo apt-get install packer
-          packer
       
-      # # packer init
-      # - name: Packer Init
-      #   uses: hashicorp/packer-github-actions@master
-      #   with:
-      #     command: init
+      - name: Packer Init
+        run: |
+          packer init .
+
+      - name: Packer Validate
+        run: |
+          packer fmt .
+          packer validate .
 
       # # validate templates
       # - name: Validate Template
