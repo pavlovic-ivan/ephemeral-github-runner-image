@@ -2,10 +2,8 @@ name: Packer Build
 
 on:
   push:
-    branches:
-      - main
-    # tags:
-    #   - v*
+    tags:
+      - v*
 env:
   GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.PACKER_SA_KEY }}
 jobs:
@@ -22,7 +20,11 @@ jobs:
           command: validate
           arguments: -syntax-only
           target: runner-machine-image.pkr.hcl
-
-      - name: Dummy step
-        run: |
-          echo "packer build -var=\"ghrunner_version=${GITHUB_REF_NAME}\" -var-file=\"machine-image.pkrvars.hcl\" runner-machine-image.pkr.hcl"
+      
+      # build artifact
+      - name: Build Artifact
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: build
+          arguments: "-on-error=abort -var=\"ghrunner_version=${GITHUB_REF_NAME}\" -var-file=\"machine-image.pkrvars.hcl\""
+          target: runner-machine-image.pkr.hcl
