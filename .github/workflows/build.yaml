@@ -2,41 +2,21 @@ name: Packer Build
 
 on:
   push:
-    branches:
-      - main
-    # tags:
-    #   - v*
+    tags:
+      - v*
 jobs:
   packer-build:
     runs-on: ubuntu-18.04
     steps:
-      - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@master
-        with:
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
-          service_account_key: ${{ secrets.PACKER_SA_KEY }}
-          export_default_credentials: true
-
-      - name: Use gcloud CLI
-        run: |
-          gcloud info
-          mv $GOOGLE_APPLICATION_CREDENTIALS $GOOGLE_APPLICATION_CREDENTIALS.json
-
       - name: Checkout Packer project
         uses: actions/checkout@v2
 
-      - name: Packer Installation
+      - name: Packer Init
         run: |
           curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
           sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
           sudo apt-get update && sudo apt-get install packer
-      
-      - name: Packer Init
-        run: |
           packer init .
-
-      - name: Packer Validate
-        run: |
           packer fmt .
           packer validate -var=ghrunner_version=v2.283.3 -var-file=runtime-variables.pkrvars.hcl .
 
@@ -46,13 +26,4 @@ jobs:
           GOOGLE_APPLICATION_CREDENTIALS: /home/runner/packer_sa_key.json
         run: |
           echo ${PACKER_SA_KEY} > /home/runner/packer_sa_key.json
-          packer build -var='ghrunner_version=v2.283.3' -var-file='runtime-variables.pkrvars.hcl' .
-      
-      # # build artifact
-      # - name: Build Artifact
-      #   uses: hashicorp/packer-github-actions@master
-      #   with:
-      #     command: build
-      #     # arguments: '-on-error=abort -var=ghrunner_version=${GITHUB_REF_NAME} -var-file=runtime-variables.pkrvars.hcl'
-      #     arguments: '-on-error=abort -var=ghrunner_version=v2.283.3 -var-file=runtime-variables.pkrvars.hcl'
-      #     target: runner-machine-image.pkr.hcl
+          packer build -var='ghrunner_version=${GITHUB_REF_NAME}' -var-file='runtime-variables.pkrvars.hcl' .
