@@ -44,10 +44,10 @@ jobs:
         run: |
           packer fmt .
           packer validate -var=ghrunner_version=v2.283.3 -var-file=runtime-variables.pkrvars.hcl .
+          echo $GOOGLE_APPLICATION_CREDENTIALS
 
       - name: Build Packer Artifact
         run: |
-          echo $GOOGLE_APPLICATION_CREDENTIALS
           packer build -var='ghrunner_version=v2.283.3' -var-file='runtime-variables.pkrvars.hcl' .
       
       # # build artifact
