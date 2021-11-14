@@ -1,0 +1,16 @@
+name: CI
+
+on:
+  push:
+    tags:
+      - v*
+env:
+  GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.PACKER_SA_KEY }}
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout Pulumi Ephemeral Github Runner project
+        uses: actions/checkout@v2
+        run: |
+          echo Done
