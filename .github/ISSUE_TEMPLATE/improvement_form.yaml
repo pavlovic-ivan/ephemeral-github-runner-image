@@ -1,0 +1,12 @@
+name: Improvement Request Form
+description: Create a report to help us improve
+title: "[IMPR]: <Summary of item>"
+labels: ["improvement"]
+body:
+  - type: textarea
+    id: improvement-description
+    attributes:
+      label: Describe the improvement request
+      description: A clear and concise description of the improvement request
+    validations:
+      required: true
