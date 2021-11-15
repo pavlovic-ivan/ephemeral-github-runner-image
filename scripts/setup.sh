@@ -7,6 +7,8 @@ sudo curl -O -L https://github.com/actions/runner/releases/download/v$RUNNER_VER
 sudo tar xzf ./actions-runner-linux-x64-$RUNNER_VERSION.tar.gz
 sudo chown -R ghrunner ~ghrunner
 
+sudo rm /var/lib/apt/lists/lock
+sudo rm /var/cache/apt/archives/lock
 sudo rm /var/lib/dpkg/lock*
 sudo dpkg --configure -a
 
