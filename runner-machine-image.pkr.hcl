@@ -23,7 +23,7 @@ build {
 
   provisioner "shell" {
     environment_vars  = [ "RUNNER_VERSION=${trimprefix(var.ghrunner_version, "v")}" ]
-    script            = "setup.sh"
+    script            = "scripts/setup.sh"
   }
 
 }
