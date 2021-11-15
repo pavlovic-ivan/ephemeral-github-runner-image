@@ -20,4 +20,10 @@ source "googlecompute" "runner_machine_image" {
 
 build {
   sources = [ "source.googlecompute.runner_machine_image" ]
+
+  provisioner "shell" {
+    environment_vars  = [ "RUNNER_VERSION=${trimprefix(var.ghrunner_version, "v")}" ]
+    script            = "setup.sh"
+  }
+
 }
