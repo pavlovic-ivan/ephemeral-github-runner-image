@@ -3,6 +3,7 @@
 ![releases](https://badgen.net/github/releases/pavlovic-ivan/ephemeral-github-runner-image?icon=github&color=orange)
 ![licence](https://badgen.net/github/license/pavlovic-ivan/ephemeral-github-runner-image?icon=github)
 ![last commit](https://badgen.net/github/last-commit/pavlovic-ivan/ephemeral-github-runner-image/main)
+[![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 
 # Introduction
 
