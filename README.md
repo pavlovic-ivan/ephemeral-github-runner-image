@@ -1,6 +1,8 @@
 ![Build Workflow](https://github.com/pavlovic-ivan/ephemeral-github-runner-image/actions/workflows/build.yaml/badge.svg?style=flat)
 ![latest tag](https://badgen.net/github/tag/pavlovic-ivan/ephemeral-github-runner-image?icon=github&color=cyan)
-![releases](https://badgen.net/github/releases/pavlovic-ivan/ephemeral-github-runner-image?icon=github&color=yellow)
+![release](https://badgen.net/github/release/pavlovic-ivan/ephemeral-github-runner-image?icon=github&color=yellow)
+![tags](https://badgen.net/github/tags/pavlovic-ivan/ephemeral-github-runner-image?icon=github&color=orange)
+![releases](https://badgen.net/github/releases/pavlovic-ivan/ephemeral-github-runner-image?icon=github)
 
 
 # Introduction
