@@ -1,4 +1,4 @@
-[![Build Workflow](https://github.com/pavlovic-ivan/ephemeral-github-runner-image/blob/main/.github/workflows/build.yaml/badge.svg?style=flat)]
+![Build Workflow](https://github.com/pavlovic-ivan/ephemeral-github-runner-image/actions/workflows/build.yaml/badge.svg?style=flat)
 
 # Introduction
 
