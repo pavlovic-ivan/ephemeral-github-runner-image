@@ -1,5 +1,5 @@
 [![Build Workflow](https://github.com/pavlovic-ivan/ephemeral-github-runner-image/actions/workflows/build.yaml/badge.svg?style=flat)](https://github.com/pavlovic-ivan/ephemeral-github-runner-image/actions)
-![release](https://badgen.net/github/release/pavlovic-ivan/ephemeral-github-runner-image?icon=github&color=cyan)
+[![release](https://badgen.net/github/release/pavlovic-ivan/ephemeral-github-runner-image?icon=github&color=cyan)](https://github.com/pavlovic-ivan/ephemeral-github-runner-image/releases/tag/v2.283.3)
 ![releases](https://badgen.net/github/releases/pavlovic-ivan/ephemeral-github-runner-image?icon=github&color=orange)
 ![licence](https://badgen.net/github/license/pavlovic-ivan/ephemeral-github-runner-image?icon=github)
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
