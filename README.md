@@ -1,4 +1,6 @@
 ![Build Workflow](https://github.com/pavlovic-ivan/ephemeral-github-runner-image/actions/workflows/build.yaml/badge.svg?style=flat)
+![Main Branch](https://github.com/github/docs/actions/workflows/main.yml/badge.svg?branch=main)
+
 
 # Introduction
 
