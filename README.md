@@ -2,7 +2,7 @@
 ![release](https://badgen.net/github/release/pavlovic-ivan/ephemeral-github-runner-image?icon=github&color=cyan)
 ![releases](https://badgen.net/github/releases/pavlovic-ivan/ephemeral-github-runner-image?icon=github&color=orange)
 ![licence](https://badgen.net/github/license/pavlovic-ivan/ephemeral-github-runner-image?icon=github)
-![last commit](https://badgen.net/github/last-commit/pavlovic-ivan/ephemeral-github-runner-image)
+![last commit](https://badgen.net/github/last-commit/pavlovic-ivan/ephemeral-github-runner-image/main)
 
 # Introduction
 
