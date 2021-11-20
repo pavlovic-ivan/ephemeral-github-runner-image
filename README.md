@@ -1,5 +1,5 @@
 ![Build Workflow](https://github.com/pavlovic-ivan/ephemeral-github-runner-image/actions/workflows/build.yaml/badge.svg?style=flat)
-![latest tag](https://badgen.net/badge/github/tag/micromatch/micromatch)
+![latest tag](https://badgen.net/badge/github/tag/pavlovic-ivan/ephemeral-github-runner-image)
 
 
 # Introduction
