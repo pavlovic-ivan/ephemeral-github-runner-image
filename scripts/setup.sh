@@ -1,15 +1,22 @@
 #!/bin/bash
 
-sudo /usr/sbin/useradd -m ghrunner
+echo "[INFO] > Disabling google-c2d-startup.service"
+systemctl disable --now google-c2d-startup.service
+dpkg --configure -a
+
+echo "[INFO] > Installing deeplearning drivers"
+/opt/deeplearning/install-driver.sh
+
+echo "[INFO] > Creating user ghrunner with home directory"
+/usr/sbin/useradd -m ghrunner
 cd /home/ghrunner
-sudo mkdir -p workdir/actions-runner && cd workdir/actions-runner
-sudo curl -O -L https://github.com/actions/runner/releases/download/v$RUNNER_VERSION/actions-runner-linux-x64-$RUNNER_VERSION.tar.gz
-sudo tar xzf ./actions-runner-linux-x64-$RUNNER_VERSION.tar.gz
-sudo chown -R ghrunner ~ghrunner
+mkdir -p workdir/actions-runner && cd workdir/actions-runner
 
-sudo rm /var/lib/apt/lists/lock
-sudo rm /var/cache/apt/archives/lock
-sudo rm /var/lib/dpkg/lock*
-sudo dpkg --configure -a
+echo "[INFO] > Downloading runner tar archive from Github"
+curl -O -L https://github.com/actions/runner/releases/download/v$RUNNER_VERSION/actions-runner-linux-x64-$RUNNER_VERSION.tar.gz
+tar xzf ./actions-runner-linux-x64-$RUNNER_VERSION.tar.gz
+rm actions-runner-linux-x64-$RUNNER_VERSION.tar.gz
+chown -R ghrunner ~ghrunner
 
-sudo /home/ghrunner/workdir/actions-runner/bin/installdependencies.sh
+echo "[INFO] > Installing runner dependencies"
+/home/ghrunner/workdir/actions-runner/bin/installdependencies.sh

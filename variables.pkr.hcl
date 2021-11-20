@@ -25,3 +25,7 @@ variable "source_image" {
 variable "ghrunner_version" {
     type = string
 }
+
+variable "machine_type" {
+    type = string
+}

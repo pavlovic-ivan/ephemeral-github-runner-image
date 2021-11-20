@@ -16,6 +16,8 @@ source "googlecompute" "runner_machine_image" {
   source_image_project_id   = var.source_image_project_id
   zone                      = var.zone
   disk_size                 = var.disk_size
+  // machine_type              = var.machine_type
+  preemptible               = "true"
 }
 
 build {
@@ -24,6 +26,7 @@ build {
   provisioner "shell" {
     environment_vars  = [ "RUNNER_VERSION=${trimprefix(var.ghrunner_version, "v")}" ]
     script            = "scripts/setup.sh"
+    execute_command   = "chmod +x {{ .Path }}; sudo sh -c '{{ .Vars }} {{ .Path }}'"
   }
 
 }

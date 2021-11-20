@@ -17,8 +17,7 @@ jobs:
           sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
           sudo apt-get update && sudo apt-get install packer
           packer init .
-          packer fmt .
-          packer validate -var=ghrunner_version=v2.283.3 -var-file=runtime-variables.pkrvars.hcl .
+          packer validate -var="ghrunner_version=$GITHUB_REF_NAME" -var-file="runtime-variables.pkrvars.hcl" .
 
       - name: Build Packer Artifact
         env:

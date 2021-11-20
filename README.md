@@ -1,3 +1,5 @@
+![Build Workflow](https://github.com/pavlovic-ivan/ephemeral-github-runner-image/blob/main/.github/workflows/build.yaml/badge.svg)
+
 # Introduction
 
 This repository is used to build GCP Machine Image for Github Ephemeral Runner using Packer. Image is based on Debian 10, with CUDA v1.13 installed. This repository bakes in the Github Runner `v2.283.3`, with its dependencies installed. Check [Usage](#usage) section for how to use this image within your IaaC.
