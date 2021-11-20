@@ -1,5 +1,6 @@
 ![Build Workflow](https://github.com/pavlovic-ivan/ephemeral-github-runner-image/actions/workflows/build.yaml/badge.svg?style=flat)
 ![latest tag](https://badgen.net/github/tag/pavlovic-ivan/ephemeral-github-runner-image?icon=github&color=cyan)
+![releases](https://badgen.net/github/releases/pavlovic-ivan/ephemeral-github-runner-image?icon=github&color=yellow)
 
 
 # Introduction
