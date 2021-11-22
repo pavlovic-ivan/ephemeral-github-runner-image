@@ -1,27 +1,23 @@
-name: Packer Build
+name: lint
 
 on:
   push:
-    tags:
-      - v*
+    branches:
+      - master
+    pull_requests:
 jobs:
-  packer-build:
+  validate:
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout Packer project
         uses: actions/checkout@v2
 
       - name: Packer Init
+        env:
+          DUMMY_VERSION_FOR_CODE_VALIDATION: v1.0.0
         run: |
           curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
           sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
           sudo apt-get update && sudo apt-get install packer
           packer init .
-
-      - name: Build Packer Artifact
-        env:
-          PACKER_SA_KEY: ${{ secrets.PACKER_SA_KEY }}
-          GOOGLE_APPLICATION_CREDENTIALS: /home/runner/packer_sa_key.json
-        run: |
-          echo ${PACKER_SA_KEY} > /home/runner/packer_sa_key.json
-          packer build -var="ghrunner_version=$GITHUB_REF_NAME" -var-file="runtime-variables.pkrvars.hcl" .
+          packer validate -var="ghrunner_version=${DUMMY_VERSION_FOR_CODE_VALIDATION}" -var-file="runtime-variables.pkrvars.hcl" .
