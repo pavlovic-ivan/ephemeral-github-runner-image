@@ -1,4 +1,4 @@
-project                 = "gr-oss-ilgpu"
+project                 = "gr-oss-251320"
 zone                    = "europe-west4-a"
 source_image_project_id = [ "ml-images" ]
 source_image_family     = "common-dl-gpu-debian-10"

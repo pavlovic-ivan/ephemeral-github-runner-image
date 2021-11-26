@@ -1,8 +1,8 @@
-[![Build Workflow](https://github.com/pavlovic-ivan/ephemeral-github-runner-image/actions/workflows/build.yaml/badge.svg?style=flat)](https://github.com/pavlovic-ivan/ephemeral-github-runner-image/actions)
-[![lint](https://github.com/pavlovic-ivan/ephemeral-github-runner-image/actions/workflows/lint.yaml/badge.svg)](https://github.com/pavlovic-ivan/ephemeral-github-runner-image/actions)
-[![release](https://badgen.net/github/release/pavlovic-ivan/ephemeral-github-runner-image?icon=github&color=cyan)](https://github.com/pavlovic-ivan/ephemeral-github-runner-image/releases/tag/v2.283.3)
-[![releases](https://badgen.net/github/releases/pavlovic-ivan/ephemeral-github-runner-image?icon=github&color=orange)](https://github.com/pavlovic-ivan/ephemeral-github-runner-image/releases)
-[![licence](https://badgen.net/github/license/pavlovic-ivan/ephemeral-github-runner-image?icon=github)](https://github.com/pavlovic-ivan/ephemeral-github-runner-image/blob/main/LICENSE.md)
+[![Build Workflow](https://github.com/pavlovic-ivan/ephemeral-github-runner-image-gcp/actions/workflows/build.yaml/badge.svg?style=flat)](https://github.com/pavlovic-ivan/ephemeral-github-runner-image-gcp/actions)
+[![lint](https://github.com/pavlovic-ivan/ephemeral-github-runner-image-gcp/actions/workflows/lint.yaml/badge.svg)](https://github.com/pavlovic-ivan/ephemeral-github-runner-image-gcp/actions)
+[![release](https://badgen.net/github/release/pavlovic-ivan/ephemeral-github-runner-image-gcp?icon=github&color=cyan)](https://github.com/pavlovic-ivan/ephemeral-github-runner-image-gcp/releases/tag/v2.283.3)
+[![releases](https://badgen.net/github/releases/pavlovic-ivan/ephemeral-github-runner-image-gcp?icon=github&color=orange)](https://github.com/pavlovic-ivan/ephemeral-github-runner-image-gcp/releases)
+[![licence](https://badgen.net/github/license/pavlovic-ivan/ephemeral-github-runner-image-gcp?icon=github)](https://github.com/pavlovic-ivan/ephemeral-github-runner-image-gcp/blob/main/LICENSE.md)
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 
 # Introduction
