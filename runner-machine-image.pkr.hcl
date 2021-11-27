@@ -16,7 +16,7 @@ source "googlecompute" "runner_machine_image" {
   source_image_project_id   = var.source_image_project_id
   zone                      = var.zone
   disk_size                 = var.disk_size
-  // machine_type              = var.machine_type
+  machine_type              = var.machine_type
   preemptible               = "true"
 }
 
