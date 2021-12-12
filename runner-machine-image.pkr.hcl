@@ -24,7 +24,11 @@ build {
   sources = [ "source.googlecompute.runner_machine_image" ]
 
   provisioner "shell" {
-    environment_vars  = [ "RUNNER_VERSION=${trimprefix(var.ghrunner_version, "v")}" ]
+    environment_vars  = [ 
+      "RUNNER_VERSION=${trimprefix(var.ghrunner_version, "v")}",
+      "DRIVERS_URL=${var.drivers_url}",
+      "DRIVERS_SCRIPT=${var.drivers_script}"
+    ]
     script            = "scripts/setup.sh"
     execute_command   = "chmod +x {{ .Path }}; sudo sh -c '{{ .Vars }} {{ .Path }}'"
   }

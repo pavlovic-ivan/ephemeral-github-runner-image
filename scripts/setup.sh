@@ -1,11 +1,12 @@
 #!/bin/bash
 
-echo "[INFO] > Disabling google-c2d-startup.service"
-systemctl disable --now google-c2d-startup.service
-dpkg --configure -a
+echo "[INFO] > Prepare the system before installing drivers"
+apt-get install -y gcc make pkg-config
 
 echo "[INFO] > Installing deeplearning drivers"
-/opt/deeplearning/install-driver.sh
+curl -O -L $DRIVERS_URL/$DRIVERS_SCRIPT
+chmod +x $DRIVERS_SCRIPT
+./$DRIVERS_SCRIPT -s
 
 echo "[INFO] > Creating user ghrunner with home directory"
 /usr/sbin/useradd -m ghrunner
@@ -13,9 +14,10 @@ cd /home/ghrunner
 mkdir -p workdir/actions-runner && cd workdir/actions-runner
 
 echo "[INFO] > Downloading runner tar archive from Github"
-curl -O -L https://github.com/actions/runner/releases/download/v$RUNNER_VERSION/actions-runner-linux-x64-$RUNNER_VERSION.tar.gz
-tar xzf ./actions-runner-linux-x64-$RUNNER_VERSION.tar.gz
-rm actions-runner-linux-x64-$RUNNER_VERSION.tar.gz
+ARCHIVE=actions-runner-linux-x64-$RUNNER_VERSION.tar.gz
+curl -O -L https://github.com/actions/runner/releases/download/v$RUNNER_VERSION/$ARCHIVE
+tar xzf ./$ARCHIVE
+rm $ARCHIVE
 chown -R ghrunner ~ghrunner
 
 echo "[INFO] > Installing runner dependencies"

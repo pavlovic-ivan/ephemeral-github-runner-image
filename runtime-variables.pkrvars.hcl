@@ -1,7 +1,9 @@
 project                 = "gr-oss-251320"
 zone                    = "europe-west4-a"
-source_image_project_id = [ "ml-images" ]
-source_image_family     = "common-dl-gpu-debian-10"
-source_image            = "c0-deeplearning-common-cu113-v20211105-debian-10"
+source_image_project_id = [ "ubuntu-os-cloud" ]
+source_image_family     = "ubuntu-2004-lts"
+source_image            = "ubuntu-2004-focal-v20211202"
 disk_size               = 100
 machine_type            = "a2-highgpu-1g"
+drivers_url             = "https://uk.download.nvidia.com/tesla/470.82.01"
+drivers_script          = "NVIDIA-Linux-x86_64-470.82.01.run"
