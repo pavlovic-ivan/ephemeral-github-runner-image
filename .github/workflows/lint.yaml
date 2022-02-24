@@ -21,4 +21,4 @@ jobs:
         with:
           command: validate
           arguments: "-var=ghrunner_version=${DUMMY_VERSION_FOR_CODE_VALIDATION} -var-file=runtime-variables.pkrvars.hcl"
-          target: runner-machine-image.pkr.hcl
+          target: .
