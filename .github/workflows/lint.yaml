@@ -11,15 +11,14 @@ jobs:
   validate:
     runs-on: ubuntu-18.04
     steps:
-      - name: Checkout Packer project
+      - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Packer Init
+      - name: Validate Template
+        uses: hashicorp/packer-github-actions@master
         env:
           DUMMY_VERSION_FOR_CODE_VALIDATION: v1.0.0
-        run: |
-          curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-          sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-          sudo apt-get update && sudo apt-get install packer
-          packer init .
-          packer validate -var="ghrunner_version=${DUMMY_VERSION_FOR_CODE_VALIDATION}" -var-file="runtime-variables.pkrvars.hcl" .
+        with:
+          command: validate
+          arguments: "-var=ghrunner_version=${DUMMY_VERSION_FOR_CODE_VALIDATION} -var-file=runtime-variables.pkrvars.hcl"
+          target: runner-machine-image.pkr.hcl
