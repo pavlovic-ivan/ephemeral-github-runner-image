@@ -14,6 +14,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Initialize Packer Plugin Binaries
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: init
+          target: .
+
       - name: Validate Template
         uses: hashicorp/packer-github-actions@master
         env:
