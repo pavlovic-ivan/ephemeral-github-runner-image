@@ -11,17 +11,20 @@ jobs:
       - name: Checkout Packer project
         uses: actions/checkout@v2
 
-      - name: Packer Init
-        run: |
-          curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-          sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-          sudo apt-get update && sudo apt-get install packer
-          packer init .
-
-      - name: Build Packer Artifact
+      - name: Export Application Credentials
+        run: echo ${{ secrets.PACKER_SA_KEY }} > $GOOGLE_APPLICATION_CREDENTIALS
         env:
-          PACKER_SA_KEY: ${{ secrets.PACKER_SA_KEY }}
           GOOGLE_APPLICATION_CREDENTIALS: /home/runner/packer_sa_key.json
-        run: |
-          echo ${PACKER_SA_KEY} > /home/runner/packer_sa_key.json
-          packer build -var="ghrunner_version=$GITHUB_REF_NAME" -var-file="runtime-variables.pkrvars.hcl" .
+
+      - name: Initialize Packer Plugin Binaries
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: init
+          target: .
+
+      - name: Build Artifact
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: build
+          arguments: "-var=ghrunner_version=$GITHUB_REF_NAME -var-file=runtime-variables.pkrvars.hcl"
+          target: .
