@@ -12,8 +12,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Export Application Credentials
-        run: |
-          echo ${{ secrets.PACKER_SA_KEY }} > $GOOGLE_APPLICATION_CREDENTIALS
+        run: echo ${{ secrets.PACKER_SA_KEY }} > $GOOGLE_APPLICATION_CREDENTIALS
         env:
           GOOGLE_APPLICATION_CREDENTIALS: /home/runner/packer_sa_key.json
 
