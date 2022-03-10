@@ -1,24 +1,26 @@
 #!/bin/bash
 
+export DEBIAN_FRONTEND=noninteractive
+
+echo "[INFO] > Disable unattended upgrades services"
+systemctl disable --now unattended-upgrades.service
+
 echo "[INFO] > Prepare the system before installing drivers"
-apt-get install -y gcc make pkg-config
+apt-get update
+apt-get install -y build-essential
 
-echo "[INFO] > Installing deeplearning drivers"
-curl -O -L $DRIVERS_URL/$DRIVERS_SCRIPT
-chmod +x $DRIVERS_SCRIPT
-./$DRIVERS_SCRIPT -s
+echo "[INFO] > Installing NVIDIA drivers"
+curl -o nvidia.run -fsSL https://us.download.nvidia.com/tesla/${NVIDIA_VERSION}/NVIDIA-Linux-x86_64-${NVIDIA_VERSION}.run
+sh nvidia.run --ui=none -q
+rm nvidia.run
 
-echo "[INFO] > Creating user ghrunner with home directory"
-/usr/sbin/useradd -m ghrunner
-cd /home/ghrunner
-mkdir -p workdir/actions-runner && cd workdir/actions-runner
+echo "[INFO] > Creating user runner with home directory"
+/usr/sbin/useradd -m runner
+mkdir ~runner/runner
 
-echo "[INFO] > Downloading runner tar archive from Github"
-ARCHIVE=actions-runner-linux-x64-$RUNNER_VERSION.tar.gz
-curl -O -L https://github.com/actions/runner/releases/download/v$RUNNER_VERSION/$ARCHIVE
-tar xzf ./$ARCHIVE
-rm $ARCHIVE
-chown -R ghrunner ~ghrunner
+echo "[INFO] > Installing GitHub Actions runner"
+curl -fsSL https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz | tar -C ~runner/runner -xzf -
+chown -R runner:runner ~runner/runner
 
-echo "[INFO] > Installing runner dependencies"
-/home/ghrunner/workdir/actions-runner/bin/installdependencies.sh
+echo "[INFO] > Installing GitHub Actions runner dependencies"
+~runner/runner/bin/installdependencies.sh

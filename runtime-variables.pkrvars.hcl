@@ -1,9 +1,0 @@
-project                 = "gr-oss-251320"
-zone                    = "europe-west4-a"
-source_image_project_id = [ "ubuntu-os-cloud" ]
-source_image_family     = "ubuntu-2004-lts"
-source_image            = "ubuntu-2004-focal-v20211202"
-disk_size               = 100
-machine_type            = "a2-highgpu-1g"
-drivers_url             = "https://uk.download.nvidia.com/tesla/470.82.01"
-drivers_script          = "NVIDIA-Linux-x86_64-470.82.01.run"
