@@ -2,29 +2,27 @@ name: Packer Build
 
 on:
   push:
-    tags:
-      - v*
+    branches:
+      - main
+
 jobs:
   packer-build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
+    environment: gcp
     steps:
       - name: Checkout Packer project
-        uses: actions/checkout@v2
-
-      - name: Export Application Credentials
-        run: echo ${{ secrets.PACKER_SA_KEY }} > $GOOGLE_APPLICATION_CREDENTIALS
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: /home/runner/packer_sa_key.json
+        uses: actions/checkout@v3
 
       - name: Initialize Packer Plugin Binaries
-        uses: hashicorp/packer-github-actions@master
-        with:
-          command: init
-          target: .
+        run: packer init .
 
-      - name: Build Artifact
-        uses: hashicorp/packer-github-actions@master
-        with:
-          command: build
-          arguments: "-var=ghrunner_version=$GITHUB_REF_NAME -var-file=runtime-variables.pkrvars.hcl"
-          target: .
+      - name: Build Image
+        env:
+          PKR_VAR_project: ${{ secrets.GOOGLE_PROJECT }}
+          GOOGLE_APPLICATION_CREDENTIALS: gcp.json
+        run: |
+          cat > $GOOGLE_APPLICATION_CREDENTIALS << EOF
+          ${{ secrets.GOOGLE_CREDENTIALS }}
+          EOF
+          trap "rm -f $GOOGLE_APPLICATION_CREDENTIALS" EXIT
+          packer build -force .

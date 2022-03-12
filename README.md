@@ -7,40 +7,57 @@
 
 # Introduction
 
-This repository is used to build GCP Machine Image for Github Ephemeral Runner using Packer. Image is based on Debian 10, with CUDA v1.13 installed. This repository bakes in the Github Runner `v2.283.3`, with its dependencies installed. Check [Usage](#usage) section for how to use this image within your IaaC.
+This repository is used to build a GCP Machine Image for ephemeral Github Actions self-hosted runners using Packer. The image is based on Ubuntu 20.04 v20220308, with NVIDIA drivers v510.47.03 and [GitHub Actions Runner](https://github.com/actions/runner) v2.288.1. Check [Usage](#usage) section for how to use this image within your IaaC.
 
 # Guidelines
 
-Github Workflow is run only on tag push. Tags are based on main branch. After accepting a pull request, tag should be created and named in the format `v<github_runner_version>`, eg: `v2.283.3`. Workflow will read the tag name, and use it to build the artifact image. Github Runner versions are available in the [download section](https://github.com/actions/runner/releases).
+## Local development
+
+For local development, you can use Visual Studio Code dev container to [open your local checkout in a container](https://code.visualstudio.com/docs/remote/containers#_quick-start-open-an-existing-folder-in-a-container).
+
+You will then need to init Packer with:
+```sh
+packer init .
+```
+
+The next step is to [create a GCP service account](https://www.packer.io/plugins/builders/googlecompute#running-outside-of-google-cloud) and save its credentials in JSON format as `gcp.json`.
+
+You can then create a local `.env` file with the following content:
+```sh
+export GOOGLE_APPLICATION_CREDENTIALS=gcp.json
+export PKR_VAR_project=<your GCP project ID>
+```
+
+Finally you can build the image with:
+```sh
+packer build .
+```
+
+## CI
+
+Github Actions workflow runs only on push to `main`, and will automatically build and publish the new image.
 
 # Usage
 
 This VM Machine Image will:
-- create `ghrunner` user and it's home directory
-- create working directory inside the home directory: `/home/ghrunner/workdir/actions-runner`
-- inside the working directory unpack the Github Runner package with available bash scripts:
+- create `runner` user and it's home directory
+- create working directory inside the home directory: `/home/runner/runner`
+- inside the working directory unpack the Github Actions Runner package with available bash scripts:
     - `config.sh`
     - `run.sh`
 
-Here is the example systemd service that registers and runs the Github Runner in Ephemeral mode:
-```
-[Unit]
-Description=Register GitHub Runner
+Here is an example script that registers and runs the Github Actions Runner in ephemeral mode:
+```sh
+su - runner -c "cd runner && \
+                  ./config.sh \
+                    --url https://github.com/{{owner}}/{{repo}} \
+                    --token {{token}} \
+                    --labels {{labels}} \
+                    --disableupdate \
+                    --unattended \
+                    --ephemeral"
 
-[Service]
-User=ghrunner
-Type=oneshot
-WorkingDirectory=/home/ghrunner/workdir/actions-runner
-ExecStartPre=-/bin/bash -c "/home/ghrunner/workdir/actions-runner/config.sh \
-    --url https://github.com/{{repoOwner}}/{{repo}} \
-    --token {{token}} \
-    --name {{ghRunnerName}} \
-    --work _work \
-    --runnergroup default \
-    --labels self-hosted \
-    --ephemeral"
-ExecStart=-/bin/bash -c "/home/ghrunner/workdir/actions-runner/run.sh"
-
-[Install]
-WantedBy=multi-user.target
+cd ~runner/runner
+./svc.sh install runner
+./svc.sh start
 ```

@@ -2,26 +2,21 @@ name: lint
 
 on:
   pull_request:
-    types: [opened]
   push:
     branches:
       - main
+
 jobs:
   validate:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Initialize Packer Plugin Binaries
-        uses: hashicorp/packer-github-actions@master
-        with:
-          command: init
-          target: .
+        run: packer init .
 
       - name: Validate Template
-        uses: hashicorp/packer-github-actions@master
-        with:
-          command: validate
-          arguments: -var=ghrunner_version=v1.0.0 -var-file=runtime-variables.pkrvars.hcl
-          target: .
+        env:
+          PKR_VAR_project: dummy_value
+        run: packer validate .
