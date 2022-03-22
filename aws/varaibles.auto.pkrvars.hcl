@@ -1,5 +1,0 @@
-region         = "us-west-2"
-source_image   = "ubuntu/images/*ubuntu-focal-20.04-amd64-server-*"
-instance_type  = "t2.micro"
-runner_version = "2.288.1"
-nvidia_version = "470.103.01"
