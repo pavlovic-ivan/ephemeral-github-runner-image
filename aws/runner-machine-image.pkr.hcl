@@ -21,26 +21,18 @@ source "amazon-ebs" "runner_machine_image" {
     owners      = ["099720109477"]
   }
   ssh_username = "ubuntu"
-  run_tags = {
-      Name = "ghrunner"
-  }
-  tags = {
-      Name = "ghrunner"
-  }
 
 }
 
 
 build {
-  name = "ghrunner"
   sources = [
     "source.amazon-ebs.runner_machine_image"
   ]
 
   provisioner "shell" {
     environment_vars = [
-      "RUNNER_VERSION=${var.runner_version}",
-      "NVIDIA_VERSION=${var.nvidia_version}"
+      "RUNNER_VERSION=${var.runner_version}"
     ]
     script          = "../scripts/setup.sh"
     execute_command = "chmod +x {{ .Path }}; sudo sh -c '{{ .Vars }} {{ .Path }}'"
