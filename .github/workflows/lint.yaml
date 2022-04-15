@@ -12,25 +12,19 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-      
-      - name: Switch to GCP
-        run: cd gcp
 
       - name: Initialize Packer Plugin Binaries:GCP
-        run: packer init .
+        run: packer init ./gcp
 
       - name: Validate Template:GCP
         env:
           PKR_VAR_project: dummy_value
-        run: packer validate .
-
-      - name: Switch to AWS
-        run: cd ../aws
+        run: packer validate ./gcp
         
       - name: Initialize Packer Plugin Binaries:AWS
-        run: packer init .
+        run: packer init ./aws
 
       - name: Validate Template:AWS
         env:
           PKR_VAR_project: dummy_value
-        run: packer validate .
+        run: packer validate ./aws
