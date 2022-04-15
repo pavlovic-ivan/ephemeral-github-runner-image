@@ -26,5 +26,5 @@ jobs:
 
       - name: Validate Template:AWS
         env:
-          PKR_VAR_project: dummy_value
+          PKR_VAR_source_image: dummy_value
         run: packer validate ./aws

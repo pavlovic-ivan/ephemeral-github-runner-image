@@ -34,7 +34,7 @@ build {
     environment_vars = [
       "RUNNER_VERSION=${var.runner_version}"
     ]
-    script          = "../scripts/setup.sh"
+    script          = "scripts/aws_setup.sh"
     execute_command = "chmod +x {{ .Path }}; sudo sh -c '{{ .Vars }} {{ .Path }}'"
   }
 }
