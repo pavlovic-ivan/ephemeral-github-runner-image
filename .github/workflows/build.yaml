@@ -34,6 +34,6 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: 
-          packer build ./aws --var_file=./aws/amd64.pkrvars.hcl
-          packer build ./aws --var_file=./aws/arm64.pkrvars.hcl
+        run: |
+          packer build -var-file=./aws/amd64.pkrvars.hcl ./aws
+          packer build -var-file=./aws/arm64.pkrvars.hcl ./aws
