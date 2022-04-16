@@ -8,13 +8,12 @@ on:
       - aws-packer-setup-ivan
 
 jobs:
-  validate:
+  init:
     runs-on: ubuntu-20.04
     strategy:
       fail-fast: true
       matrix:
         provider: [gcp, aws]
-        # arch: [amd64, arm64]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -22,15 +21,21 @@ jobs:
       - name: Init Packer plugin binaries - ${{ matrix.provider }}
         run: packer init ./${{ matrix.provider }}
 
-      - name: Add architecture to strategy matrix
-        id: add-arch-to-matrix
+  validate:
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: true
+      matrix:
+        provider: [gcp, aws]
+        arch: [amd64, arm64]
+    steps:
+      - name: Validate template - ${{ matrix.provider }} ${{ matrix.arch }}
         run: |
-          arch=("amd64", "arm64")
-          matrix=${{ fromJson(matrix) }}
-          $matrix.arch=$arch
-          echo "::set-output name=matrix::toJson($matrix)"
-      - name: Output full matrix
-        run: echo ${{ steps.add-arch-to-matrix.outputs.matrix }}
+          if[[ -e ${{ matrix.provider }}/${{ matrix.arch }}/values.pkrvars.hcl ]]; then
+            echo 'Exists'
+          else
+            echo 'Doesn't exist'
+          fi
 
 
       # - name: Initialize Packer Plugin Binaries:GCP
