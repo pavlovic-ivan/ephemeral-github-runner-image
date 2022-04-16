@@ -24,7 +24,7 @@ jobs:
       - name: Validate packer template - ${{ matrix.provider }}
         run: |
           if [[ gcp == ${{ matrix.provider }} ]]
-            export PKR_VAR_project: dummy_value
+            export PKR_VAR_project=dummy_value
           fi
 
           declare -a arr=("arm64" "amd64")
