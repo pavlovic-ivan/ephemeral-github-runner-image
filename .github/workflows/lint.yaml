@@ -29,8 +29,8 @@ jobs:
           matrix=${{ fromJson(matrix) }}
           $matrix.arch=$arch
           echo "::set-output name=matrix::toJson($matrix)"
-        outputs:
-          full-matrix: ${{ steps.add-arch-to-matrix.outputs.matrix }}
+      - name: Output full matrix
+        run: echo ${{ steps.add-arch-to-matrix.outputs.matrix }}
 
 
       # - name: Initialize Packer Plugin Binaries:GCP
