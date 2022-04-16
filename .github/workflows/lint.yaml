@@ -8,10 +8,10 @@ on:
       - aws-packer-setup-ivan # TODO: remove
 
 jobs:
-  init:
+  validate:
     runs-on: ubuntu-20.04
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         provider: [gcp, aws]
     steps:
@@ -21,26 +21,18 @@ jobs:
       - name: Init Packer plugin binaries - ${{ matrix.provider }}
         run: packer init ./${{ matrix.provider }}
 
-  validate:
-    runs-on: ubuntu-20.04
-    needs: init
-    strategy:
-      fail-fast: false
-      matrix:
-        provider: [gcp, aws]
-        arch: [amd64, arm64]
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: Validate template - ${{ matrix.provider }}(${{ matrix.arch }})
+      - name: Validate packer template - ${{ matrix.provider }}
+        env:
+          ARCH: amd64,arm64
         run: |
-          if test -f ${{ matrix.provider }}/${{ matrix.arch }}/values.pkrvars.hcl; then
-            packer validate -var-file=./${{ matrix.provider }}/${{ matrix.arch }}/values.pkrvars.hcl ./${{ matrix.provider }}
-          else
-            echo 'Does not exist'
-          fi
-
+          for a in $ARCH; do
+            if test -f ${{ matrix.provider }}/$a/values.pkrvars.hcl; then
+              packer validate -var-file=./${{ matrix.provider }}/$a/values.pkrvars.hcl ./${{ matrix.provider }}
+            else
+              echo 'Does not exist'
+            fi
+          done
+          
 
       # - name: Initialize Packer Plugin Binaries:GCP
       #   run: packer init ./gcp
