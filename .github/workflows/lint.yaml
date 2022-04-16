@@ -22,6 +22,17 @@ jobs:
       - name: Init Packer plugin binaries - ${{ matrix.provider }}
         run: packer init ./${{ matrix.provider }}
 
+      - name: Add architecture to strategy matrix
+        id: add-arch-to-matrix
+        run: |
+          arch=("amd64", "arm64")
+          matrix=${{ fromJson(matrix) }}
+          $matrix.arch=$arch
+          echo "::set-output name=matrix::toJson($matrix)"
+        outputs:
+          full-matrix: ${{ steps.add-arch-to-matrix.outputs.matrix }}
+
+
       # - name: Initialize Packer Plugin Binaries:GCP
       #   run: packer init ./gcp
 
