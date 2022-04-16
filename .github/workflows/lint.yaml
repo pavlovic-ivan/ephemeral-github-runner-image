@@ -10,30 +10,22 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-20.04
-    strategy:
-      fail-fast: false
-      matrix:
-        provider: [gcp, aws]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Init Packer plugin binaries - ${{ matrix.provider }}
-        run: packer init ./${{ matrix.provider }}
+      - name: Initialize Packer Plugin Binaries:GCP
+        run: packer init ./gcp
 
-      - name: Validate packer template - ${{ matrix.provider }}
+      - name: Validate Template:GCP
+        env:
+          PKR_VAR_project: dummy_value
+        run: packer validate ./gcp
+        
+      - name: Initialize Packer Plugin Binaries:AWS
+        run: packer init ./aws
+
+      - name: Validate Template:AWS
         run: |
-          if [[ gcp == ${{ matrix.provider }} ]]; then
-            export PKR_VAR_project=dummy_value
-          fi
-
-          declare -a arr=("arm64" "amd64")
-          for a in "${arr[@]}"; do
-            echo "Validating ${{ matrix.provider }}/$a"
-            if test -f $(pwd)/${{ matrix.provider }}/$a/values.pkrvars.hcl; then
-              packer validate -var-file=$(pwd)/${{ matrix.provider }}/$a/values.pkrvars.hcl ./${{ matrix.provider }}
-            else
-              echo "Skipping this turn. ${{ matrix.provider }}/$a/values.pkrvars.hcl Does not exist"
-            fi
-            echo "-------------------------------------------"
-          done
+          packer validate -var-file=./aws/amd64.pkrvars.hcl ./aws
+          packer validate -var-file=./aws/arm64.pkrvars.hcl ./aws
