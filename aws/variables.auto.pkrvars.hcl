@@ -1,6 +1,5 @@
 region          = "eu-west-2"
 instance_type   = "t2.micro"
 runner_version  = "2.288.1"
-nvidia_version  = "470.103.01"
 arch            = "amd64"
 source_image    = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20211129"
