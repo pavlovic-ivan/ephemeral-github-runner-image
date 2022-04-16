@@ -5,7 +5,6 @@ on:
   push:
     branches:
       - main
-      - aws-packer-setup-ivan # TODO: remove
 
 jobs:
   validate:
