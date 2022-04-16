@@ -33,8 +33,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
       - name: Validate template - ${{ matrix.provider }}(${{ matrix.arch }})
+        shell: bash
         run: |
-          if[[ -d ${{ matrix.provider }}/${{ matrix.arch }} ]]
+          if[[ -d ${{ matrix.provider }}/${{ matrix.arch }} ]]; then
             cd $(pwd)/${{ matrix.provider }}/${{ matrix.arch }}
             ls -la
           else
