@@ -8,7 +8,7 @@ packer {
 }
 
 source "amazon-ebs" "runner_machine_image" {
-  ami_name      = format("%s-ghr%s-nv%s", regex_replace(var.source_image, "(ubuntu/images/((\\*)|(hvm-ssd/)))|(-\\*)|(\\.)", "" ), replace(var.runner_version, ".", ""), replace(var.nvidia_version, ".", ""))
+  ami_name      = format("%s-ghr%s", regex_replace(var.source_image, "(ubuntu/images/((\\*)|(hvm-ssd/)))|(-\\*)|(\\.)", "" ), replace(var.runner_version, ".", ""))
   instance_type = var.instance_type
   region        = var.region
   source_ami_filter {
@@ -31,10 +31,10 @@ build {
 
   provisioner "shell" {
     environment_vars = [
-      "RUNNER_VERSION=${var.runner_version}"
+      "RUNNER_VERSION=${var.runner_version}",
       "ARCH=${var.arch == "amd64" ? "x64" : var.arch}"
     ]
-    script          = "scripts/setup_without_nvidia.sh"
+    script          = "../scripts/setup_without_nvidia.sh"
     execute_command = "chmod +x {{ .Path }}; sudo sh -c '{{ .Vars }} {{ .Path }}'"
   }
 }

@@ -9,22 +9,30 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: true
+      matrix:
+        provider: [gcp, aws]
+        arch: [amd64, arm64]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Initialize Packer Plugin Binaries:GCP
-        run: packer init ./gcp
+      - name: Init Packer plugin binaries - ${{ matrix.provider }}
+        run: packer init ./${{ matrix.provider }}
 
-      - name: Validate Template:GCP
-        env:
-          PKR_VAR_project: dummy_value
-        run: packer validate ./gcp
+      # - name: Initialize Packer Plugin Binaries:GCP
+      #   run: packer init ./gcp
+
+      # - name: Validate Template:GCP
+      #   env:
+      #     PKR_VAR_project: dummy_value
+      #   run: packer validate ./gcp
         
-      - name: Initialize Packer Plugin Binaries:AWS
-        run: packer init ./aws
+      # - name: Initialize Packer Plugin Binaries:AWS
+      #   run: packer init ./aws
 
-      - name: Validate Template:AWS
-        run: |
-          packer validate -var-file=./aws/amd64.pkrvars.hcl ./aws
-          packer validate -var-file=./aws/arm64.pkrvars.hcl ./aws
+      # - name: Validate Template:AWS
+      #   run: |
+      #     packer validate -var-file=./aws/amd64.pkrvars.hcl ./aws
+      #     packer validate -var-file=./aws/arm64.pkrvars.hcl ./aws
