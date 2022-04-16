@@ -30,6 +30,8 @@ jobs:
         provider: [gcp, aws]
         arch: [amd64, arm64]
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
       - name: Validate template - ${{ matrix.provider }}(${{ matrix.arch }})
         run: |
           if[[ -e "$(pwd)/${{ matrix.provider }}/${{ matrix.arch }}/values.pkrvars.hcl" ]]
