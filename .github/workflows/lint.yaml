@@ -36,6 +36,7 @@ jobs:
           ref: aws-packer-setup-ivan
       - name: Validate template - ${{ matrix.provider }}(${{ matrix.arch }})
         run: |
+          cd ${{ matrix.provider }}
           ls -la
 
 
