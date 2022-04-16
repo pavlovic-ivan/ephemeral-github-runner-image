@@ -25,7 +25,7 @@ jobs:
         run: |
           arch=(amd64,arm64)
           for a in $arch; do
-            if test -f ${{ matrix.provider }}/$a/values.pkrvars.hcl; then
+            if [test -f ${{ matrix.provider }}/$a/values.pkrvars.hcl]; then
               packer validate -var-file=./${{ matrix.provider }}/$a/values.pkrvars.hcl ./${{ matrix.provider }}
             else
               echo 'Skipping this turn. ${{ matrix.provider }}/$a/values.pkrvars.hcl Does not exist'
