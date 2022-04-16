@@ -36,11 +36,7 @@ jobs:
           ref: aws-packer-setup-ivan
       - name: Validate template - ${{ matrix.provider }}(${{ matrix.arch }})
         run: |
-          if[[ -e "$(pwd)/${{ matrix.provider }}/${{ matrix.arch }}/values.pkrvars.hcl" ]]
-            echo Exists
-          else
-            echo Doesn't exist
-          fi
+          ls -la
 
 
       # - name: Initialize Packer Plugin Binaries:GCP
