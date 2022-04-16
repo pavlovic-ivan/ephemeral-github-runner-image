@@ -23,7 +23,7 @@ jobs:
 
       - name: Validate packer template - ${{ matrix.provider }}
         run: |
-          if [[ gcp == ${{ matrix.provider }} ]]
+          if [[ gcp == ${{ matrix.provider }} ]]; then
             export PKR_VAR_project=dummy_value
           fi
 
