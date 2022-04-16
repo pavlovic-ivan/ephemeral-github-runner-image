@@ -35,7 +35,7 @@ jobs:
       - name: Validate template - ${{ matrix.provider }}(${{ matrix.arch }})
         shell: bash
         run: |
-          if[[ -d ${{ matrix.provider }}/${{ matrix.arch }} ]]; then
+          if( -d ${{ matrix.provider }}/${{ matrix.arch }} )
             cd $(pwd)/${{ matrix.provider }}/${{ matrix.arch }}
             ls -la
           else
