@@ -1,3 +1,10 @@
+#!/bin/bash
+
+export DEBIAN_FRONTEND=noninteractive
+
+echo "[INFO] > Disable unattended upgrades services"
+systemctl disable --now unattended-upgrades.service
+
 echo "[INFO] > Creating user runner with home directory"
 /usr/sbin/useradd -m runner
 mkdir ~runner/runner
