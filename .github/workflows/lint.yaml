@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-20.04
     needs: init
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         provider: [gcp, aws]
         arch: [amd64, arm64]
@@ -34,8 +34,12 @@ jobs:
         uses: actions/checkout@v3
       - name: Validate template - ${{ matrix.provider }}(${{ matrix.arch }})
         run: |
-          cd $(pwd)/${{ matrix.provider }}/${{ matrix.arch }}
-          ls -la
+          if[[ -d $(pwd)/${{ matrix.provider }}/${{ matrix.arch }} ]]
+            cd $(pwd)/${{ matrix.provider }}/${{ matrix.arch }}
+            ls -la
+          else
+            echo 'Does not exist'
+          fi
 
 
       # - name: Initialize Packer Plugin Binaries:GCP
