@@ -28,7 +28,7 @@ build {
       "RUNNER_VERSION=${var.runner_version}",
       "NVIDIA_VERSION=${var.nvidia_version}"
     ]
-    script          = "../scripts/setup.sh"
+    script          = "../scripts/gcp_setup.sh"
     execute_command = "chmod +x {{ .Path }}; sudo sh -c '{{ .Vars }} {{ .Path }}'"
   }
 

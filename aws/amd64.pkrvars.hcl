@@ -1,2 +1,5 @@
 source_image   = "ubuntu/images/*ubuntu-focal-20.04-amd64-server-*"
+instance_type  = "t2.micro"
+region         = "eu-west-2"
+runner_version = "2.288.1"
 # source_image   = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20211129"
