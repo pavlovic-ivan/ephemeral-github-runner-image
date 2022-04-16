@@ -26,7 +26,7 @@ build {
   provisioner "shell" {
     environment_vars = [
       "RUNNER_VERSION=${var.runner_version}",
-      "NVIDIA_VERSION=${var.nvidia_version}"
+      "NVIDIA_VERSION=${var.nvidia_version}",
       "ARCH=x64"
     ]
     script          = "../scripts/setup_with_nvidia.sh"
