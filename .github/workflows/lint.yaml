@@ -27,5 +27,5 @@ jobs:
 
       - name: Validate Template:AWS
         run: |
-          packer validate -var-file=./aws/amd64.pkrvars.hcl ./aws
-          packer validate -var-file=./aws/arm64.pkrvars.hcl ./aws
+          packer validate -var-file=./aws/amd64/values.pkrvars.hcl ./aws
+          packer validate -var-file=./aws/arm64/values.pkrvars.hcl ./aws
