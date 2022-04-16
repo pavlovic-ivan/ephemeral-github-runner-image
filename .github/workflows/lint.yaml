@@ -23,6 +23,7 @@ jobs:
 
   validate:
     runs-on: ubuntu-20.04
+    needs: init
     strategy:
       fail-fast: true
       matrix:
