@@ -32,7 +32,7 @@ jobs:
     steps:
       - name: Validate template - ${{ matrix.provider }}(${{ matrix.arch }})
         run: |
-          if[[ -e "${{ matrix.provider }}/${{ matrix.arch }}/values.pkrvars.hcl" ]]; then
+          if[[ -f "${{ matrix.provider }}/${{ matrix.arch }}/values.pkrvars.hcl" ]]; then
             echo Exists
           else
             echo Doesn't exist
