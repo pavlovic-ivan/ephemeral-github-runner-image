@@ -20,7 +20,7 @@ jobs:
       - name: Validate Template:GCP
         env:
           PKR_VAR_project: dummy_value
-        run: packer validate ./gcp
+        run: packer validate -var-file=./gcp/amd64/values.pkrvars.hcl ./gcp
         
       - name: Initialize Packer Plugin Binaries:AWS
         run: packer init ./aws
