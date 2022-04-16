@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - aws-packer-setup-ivan # TODO: remove
 
 jobs:
   packer-build:
@@ -25,7 +26,7 @@ jobs:
           ${{ secrets.GOOGLE_CREDENTIALS }}
           EOF
           trap "rm -f $GOOGLE_APPLICATION_CREDENTIALS" EXIT
-          packer build -force ./gcp
+          packer build -force -var-file=./gcp/amd64/values.pkrvars.hcl ./gcp
 
       - name: Initialize Packer Plugin Binaries:AWS
         run: packer init ./aws
