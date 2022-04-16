@@ -34,7 +34,7 @@ build {
       "RUNNER_VERSION=${var.runner_version}",
       "ARCH=${var.arch == "amd64" ? "x64" : var.arch}"
     ]
-    script          = "${path.cwd}/scripts/setup_without_nvidia.sh"
+    script          = "../scripts/setup_without_nvidia.sh"
     execute_command = "chmod +x {{ .Path }}; sudo sh -c '{{ .Vars }} {{ .Path }}'"
   }
 }
