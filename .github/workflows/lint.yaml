@@ -23,9 +23,9 @@ jobs:
 
       - name: Validate packer template - ${{ matrix.provider }}
         run: |
-          arch=(amd64,arm64)
-          for a in $arch; do
-            if [test -f ${{ matrix.provider }}/$a/values.pkrvars.hcl]; then
+          declare -a arr=("arm64" "amd64")
+          for a in "${arr[@]}"; do
+            if test -f ${{ matrix.provider }}/$a/values.pkrvars.hcl; then
               packer validate -var-file=./${{ matrix.provider }}/$a/values.pkrvars.hcl ./${{ matrix.provider }}
             else
               echo 'Skipping this turn. ${{ matrix.provider }}/$a/values.pkrvars.hcl Does not exist'
