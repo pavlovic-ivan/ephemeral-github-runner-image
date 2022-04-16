@@ -32,10 +32,11 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+
       - name: Validate template - ${{ matrix.provider }}(${{ matrix.arch }})
         run: |
           if test -f ${{ matrix.provider }}/${{ matrix.arch }}/values.pkrvars.hcl; then
-            echo 'Exists'
+            packer validate -var-file=./${{ matrix.provider }}/${{ matrix.arch }}/values.pkrvars.hcl ./${{ matrix.provider }}
           else
             echo 'Does not exist'
           fi
