@@ -30,9 +30,9 @@ jobs:
         provider: [gcp, aws]
         arch: [amd64, arm64]
     steps:
-      - name: Validate template - ${{ matrix.provider }} ${{ matrix.arch }}
+      - name: Validate template - ${{ matrix.provider }}(${{ matrix.arch }})
         run: |
-          if[[ -e ${{ matrix.provider }}/${{ matrix.arch }}/values.pkrvars.hcl ]]; then
+          if[[ -e "${{ matrix.provider }}/${{ matrix.arch }}/values.pkrvars.hcl" ]]; then
             echo Exists
           else
             echo Doesn't exist
