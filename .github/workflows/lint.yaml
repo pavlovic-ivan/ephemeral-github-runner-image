@@ -29,9 +29,8 @@ jobs:
 
           declare -a arr=("arm64" "amd64")
           for a in "${arr[@]}"; do
-            if test -f ${{ matrix.provider }}/$a/values.pkrvars.hcl; then
-              cd ${{ matrix.provider }}
-              packer validate -var-file=$a/values.pkrvars.hcl .
+            if test -f $(pwd)/${{ matrix.provider }}/$a/values.pkrvars.hcl; then
+              packer validate -var-file=$(pwd)/${{ matrix.provider }}/$a/values.pkrvars.hcl ./${{ matrix.provider }}
             else
               echo "Skipping this turn. ${{ matrix.provider }}/$a/values.pkrvars.hcl Does not exist"
             fi

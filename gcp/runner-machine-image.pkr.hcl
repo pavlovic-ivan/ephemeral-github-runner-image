@@ -29,7 +29,7 @@ build {
       "NVIDIA_VERSION=${var.nvidia_version}",
       "ARCH=x64"
     ]
-    script          = "../scripts/setup_with_nvidia.sh"
+    script          = "${path.cwd}/scripts/setup_with_nvidia.sh"
     execute_command = "chmod +x {{ .Path }}; sudo sh -c '{{ .Vars }} {{ .Path }}'"
   }
 
