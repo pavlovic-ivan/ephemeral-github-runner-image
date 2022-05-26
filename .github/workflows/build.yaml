@@ -13,10 +13,10 @@ jobs:
       - name: Checkout Packer project
         uses: actions/checkout@v3
 
-      - name: Initialize Packer Plugin Binaries
-        run: packer init .
+      - name: Initialize Packer Plugin Binaries:GCP
+        run: packer init ./gcp
 
-      - name: Build Image
+      - name: Build Image:GCP
         env:
           PKR_VAR_project: ${{ secrets.GOOGLE_PROJECT }}
           GOOGLE_APPLICATION_CREDENTIALS: gcp.json
@@ -25,4 +25,15 @@ jobs:
           ${{ secrets.GOOGLE_CREDENTIALS }}
           EOF
           trap "rm -f $GOOGLE_APPLICATION_CREDENTIALS" EXIT
-          packer build -force .
+          packer build -force -var-file=./gcp/amd64/values.pkrvars.hcl ./gcp
+
+      - name: Initialize Packer Plugin Binaries:AWS
+        run: packer init ./aws
+
+      - name: Build Image:AWS
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          packer build -force -var-file=./aws/amd64/values.pkrvars.hcl ./aws
+          packer build -force -var-file=./aws/arm64/values.pkrvars.hcl ./aws

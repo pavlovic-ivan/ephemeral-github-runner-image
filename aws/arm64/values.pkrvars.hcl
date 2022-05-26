@@ -1,0 +1,5 @@
+source_image    = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-arm64-server-20211129"
+instance_type   = "t4g.micro"
+region          = "eu-west-2"
+runner_version  = "2.288.1"
+arch            = "arm64"

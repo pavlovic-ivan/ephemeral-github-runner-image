@@ -13,10 +13,18 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Initialize Packer Plugin Binaries
-        run: packer init .
+      - name: Initialize Packer Plugin Binaries:GCP
+        run: packer init ./gcp
 
-      - name: Validate Template
+      - name: Validate Template:GCP
         env:
           PKR_VAR_project: dummy_value
-        run: packer validate .
+        run: packer validate -var-file=./gcp/amd64/values.pkrvars.hcl ./gcp
+        
+      - name: Initialize Packer Plugin Binaries:AWS
+        run: packer init ./aws
+
+      - name: Validate Template:AWS
+        run: |
+          packer validate -var-file=./aws/amd64/values.pkrvars.hcl ./aws
+          packer validate -var-file=./aws/arm64/values.pkrvars.hcl ./aws

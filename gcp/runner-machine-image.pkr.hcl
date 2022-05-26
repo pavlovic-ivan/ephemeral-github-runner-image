@@ -26,9 +26,10 @@ build {
   provisioner "shell" {
     environment_vars = [
       "RUNNER_VERSION=${var.runner_version}",
-      "NVIDIA_VERSION=${var.nvidia_version}"
+      "NVIDIA_VERSION=${var.nvidia_version}",
+      "ARCH=x64"
     ]
-    script          = "scripts/setup.sh"
+    script          = "${path.cwd}/scripts/setup_with_nvidia.sh"
     execute_command = "chmod +x {{ .Path }}; sudo sh -c '{{ .Vars }} {{ .Path }}'"
   }
 
