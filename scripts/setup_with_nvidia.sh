@@ -9,6 +9,13 @@ echo "[INFO] > Prepare the system before installing drivers"
 apt-get update
 apt-get install -y build-essential
 
+echo "[INFO] > Disable Nouveau drivers"
+cat <<EOF > /etc/modprobe.d/blacklist-nouveau.conf
+blacklist nouveau
+options nouveau modeset=0
+EOF
+sudo update-initramfs -u
+
 echo "[INFO] > Installing NVIDIA drivers"
 curl -o nvidia.run -fsSL https://us.download.nvidia.com/tesla/${NVIDIA_VERSION}/NVIDIA-Linux-x86_64-${NVIDIA_VERSION}.run
 sh nvidia.run --ui=none -q
