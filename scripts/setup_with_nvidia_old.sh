@@ -7,12 +7,12 @@ systemctl disable --now unattended-upgrades.service
 
 echo "[INFO] > Prepare the system before installing drivers"
 apt-get update
-apt-get install -y build-essential ubuntu-drivers-common
+apt-get install -y build-essential
 
 echo "[INFO] > Installing NVIDIA drivers"
-ubuntu-drivers autoinstall
-apt install nvidia-driver-${NVIDIA_MAJOR_VERSION}
-apt autoremove -y
+curl -o nvidia.run -fsSL https://us.download.nvidia.com/tesla/${NVIDIA_VERSION}/NVIDIA-Linux-x86_64-${NVIDIA_VERSION}.run
+sh nvidia.run --ui=none -q
+rm nvidia.run
 
 echo "[INFO] > Creating user runner with home directory"
 /usr/sbin/useradd -m runner
