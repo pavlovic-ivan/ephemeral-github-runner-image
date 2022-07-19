@@ -7,11 +7,8 @@ on:
       - main
 
 jobs:
-  validate:
+  validate-gcp:
     runs-on: ubuntu-20.04
-    strategy:
-      matrix:
-        aws-region: [us-east-1, us-west-2]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -23,11 +20,20 @@ jobs:
         env:
           PKR_VAR_project: dummy_value
         run: packer validate -var-file=./gcp/amd64/values.pkrvars.hcl ./gcp
+
+  validate-aws:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        aws-region: [us-east-1, us-west-2]
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
         
       - name: Initialize Packer Plugin Binaries:AWS
         run: packer init ./aws
 
       - name: Validate Template:AWS
         run: |
-          packer validate -var-file=./aws/amd64/values.pkrvars.hcl ./aws -var "region=${{ matrix.aws-region }}"
-          packer validate -var-file=./aws/arm64/values.pkrvars.hcl ./aws -var "region=${{ matrix.aws-region }}"
+          packer validate -var-file=./aws/amd64/values.pkrvars.hcl -var "region=${{ matrix.aws-region }}" ./aws
+          packer validate -var-file=./aws/arm64/values.pkrvars.hcl -var "region=${{ matrix.aws-region }}" ./aws
