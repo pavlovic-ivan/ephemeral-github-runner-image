@@ -6,29 +6,36 @@ on:
       - main
 
 jobs:
-  packer-build:
+  build-gcp:
     runs-on: ubuntu-20.04
     environment: gcp
+    steps:
+      - name: Checkout Packer project
+        uses: actions/checkout@v3
+
+      - name: Initialize Packer Plugin Binaries:GCP
+        run: packer init ./gcp
+
+      - name: Build Image:GCP
+        env:
+          PKR_VAR_project: ${{ secrets.GOOGLE_PROJECT }}
+          GOOGLE_APPLICATION_CREDENTIALS: gcp.json
+        run: |
+          cat > $GOOGLE_APPLICATION_CREDENTIALS << EOF
+          ${{ secrets.GOOGLE_CREDENTIALS }}
+          EOF
+          trap "rm -f $GOOGLE_APPLICATION_CREDENTIALS" EXIT
+          packer build -force -var-file=./gcp/amd64/values.pkrvars.hcl ./gcp
+
+  build-aws:
+    runs-on: ubuntu-20.04
+    environment: aws
     strategy:
       matrix:
         aws-region: [us-east-1, us-west-2]
     steps:
       - name: Checkout Packer project
         uses: actions/checkout@v3
-
-      # - name: Initialize Packer Plugin Binaries:GCP
-      #   run: packer init ./gcp
-
-      # - name: Build Image:GCP
-      #   env:
-      #     PKR_VAR_project: ${{ secrets.GOOGLE_PROJECT }}
-      #     GOOGLE_APPLICATION_CREDENTIALS: gcp.json
-      #   run: |
-      #     cat > $GOOGLE_APPLICATION_CREDENTIALS << EOF
-      #     ${{ secrets.GOOGLE_CREDENTIALS }}
-      #     EOF
-      #     trap "rm -f $GOOGLE_APPLICATION_CREDENTIALS" EXIT
-      #     packer build -force -var-file=./gcp/amd64/values.pkrvars.hcl ./gcp
 
       - name: Initialize Packer Plugin Binaries:AWS
         run: packer init ./aws
@@ -38,5 +45,5 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          packer build -force -var-file=./aws/amd64/values.pkrvars.hcl ./aws -var "region=${{ matrix.aws-region }}"
-          packer build -force -var-file=./aws/arm64/values.pkrvars.hcl ./aws -var "region=${{ matrix.aws-region }}"
+          packer build -force -var-file=./aws/amd64/values.pkrvars.hcl -var "region=${{ matrix.aws-region }}" ./aws
+          packer build -force -var-file=./aws/arm64/values.pkrvars.hcl -var "region=${{ matrix.aws-region }}" ./aws
