@@ -28,7 +28,7 @@ build {
 
   provisioner "shell" {
     environment_vars = [
-      "RUNNER_VERSION=${var.runner_version}",
+      "RUNNER_VERSION=${trim(var.runner_version, "v")}",
       "NVIDIA_MAJOR_VERSION=${var.nvidia_major_version}",
       "ARCH=x64"
     ]
