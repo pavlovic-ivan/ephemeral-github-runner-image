@@ -21,8 +21,8 @@ jobs:
         run: |
           current_version=$(cat versions.json| jq -r '.runner')
           latest_version=$(gh api /repos/actions/runner/releases/latest | jq -r .tag_name)
+          matching=false
           if [ "$current_version" = "$latest_version" ]; then
-              echo "Strings are equal."
-          else
-              echo "Strings are not equal."
+              matching=true;
           fi
+          echo $matching
