@@ -19,10 +19,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          current_version=$(cat versions.json| jq -r '.runner')
+          current_version=$(cat versions.json | jq -r '.runner')
           latest_version=$(gh api /repos/actions/runner/releases/latest | jq -r .tag_name)
           matching=false
           if [ "$current_version" = "$latest_version" ]; then
               matching=true;
           fi
-          echo $matching
+          echo "::set-output name=matching::$matching"
+      - name: Create PR
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          latest_version=$(gh api /repos/actions/runner/releases/latest | jq -r .tag_name)
+          cat versions.json | jq '.runner = "$latest_version"' > versions.json
+          cat versions.json
