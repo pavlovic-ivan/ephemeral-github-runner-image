@@ -22,17 +22,17 @@ jobs:
         run: |
           current_version=$(cat versions.json | jq -r '.runner')
           latest_version=$(gh api /repos/actions/runner/releases/latest | jq -r .tag_name)
-          matching=false
           if [ "$current_version" = "$latest_version" ]; then
               matching=true;
           else
               cat versions.json | jq --arg v "$latest_version" '.runner = ($v)' > tmp.json
               cat tmp.json > versions.json
               rm tmp.json
+              matching=false
           fi
           echo "::set-output name=matching::$matching"
       - name: Create PR
-        if: ${{ !steps.compare-versions.outputs.matching }}
+        if: ${{ steps.compare-versions.outputs.matching == 'false'}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh pr create --title "[bot] Bump versions" --body "Versions bumped"
