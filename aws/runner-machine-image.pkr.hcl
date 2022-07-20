@@ -31,7 +31,7 @@ build {
 
   provisioner "shell" {
     environment_vars = [
-      "RUNNER_VERSION=${var.runner_version}",
+      "RUNNER_VERSION=${trim(var.runner_version, "v")}",
       "ARCH=${var.arch == "amd64" ? "x64" : var.arch}"
     ]
     script          = "${path.cwd}/scripts/setup_without_nvidia.sh"
