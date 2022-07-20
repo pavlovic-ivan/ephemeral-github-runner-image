@@ -19,7 +19,7 @@ jobs:
       - name: Validate Template:GCP
         env:
           PKR_VAR_project: dummy_value
-        run: packer validate -var-file=./gcp/amd64/values.pkrvars.hcl ./gcp
+        run: packer validate -var-file=./gcp/amd64/values.pkrvars.hcl -var "runner_version=$(cat versions.json | jq -r '.runner')" ./gcp
 
   validate-aws:
     runs-on: ubuntu-20.04
@@ -35,5 +35,5 @@ jobs:
 
       - name: Validate Template:AWS
         run: |
-          packer validate -var-file=./aws/amd64/values.pkrvars.hcl -var "region=${{ matrix.aws-region }}" ./aws
-          packer validate -var-file=./aws/arm64/values.pkrvars.hcl -var "region=${{ matrix.aws-region }}" ./aws
+          packer validate -var-file=./aws/amd64/values.pkrvars.hcl -var "region=${{ matrix.aws-region }}" -var "runner_version=$(cat versions.json | jq -r '.runner')" ./aws
+          packer validate -var-file=./aws/arm64/values.pkrvars.hcl -var "region=${{ matrix.aws-region }}" -var "runner_version=$(cat versions.json | jq -r '.runner')" ./aws
