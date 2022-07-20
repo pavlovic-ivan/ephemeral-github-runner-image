@@ -15,9 +15,10 @@ jobs:
     steps:
       - name: Checkout Packer Project
         uses: actions/checkout@v3
-      - name: Print Current Runner Version
-        run: cat versions.json| jq '.runner'
-      - name: Print Latest Runner Version
+      - name: Compare versions
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh api /repos/actions/runner/releases/latest | jq -r .tag_name
+        run: |
+          current_version=$(cat versions.json| jq -r '.runner')
+          latest_version=$(gh api /repos/actions/runner/releases/latest | jq -r .tag_name)
+          echo $current_version $latest_version
