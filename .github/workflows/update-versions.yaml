@@ -25,9 +25,13 @@ jobs:
           if [ "$current_version" = "$latest_version" ]; then
               matching=true;
           else
+              git checkout -b bump-versions-${{ github.job }}
               cat versions.json | jq --arg v "$latest_version" '.runner = ($v)' > tmp.json
               cat tmp.json > versions.json
               rm tmp.json
+              git add .
+              git commit -m "[bot] Bump versions"
+              git push origin bump-versions-${{ github.job }}
               matching=false
           fi
           echo "::set-output name=matching::$matching"
@@ -35,5 +39,5 @@ jobs:
         if: ${{ steps.compare-versions.outputs.matching == 'false'}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh pr create --title "[bot] Bump versions" --body "Versions bumped"
+        run: gh pr create --title "[bot] Bump versions" --body "Versions bumped" -B bump-versions-${{ github.job }} -H main
 
