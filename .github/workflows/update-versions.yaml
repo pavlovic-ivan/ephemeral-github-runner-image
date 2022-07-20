@@ -25,7 +25,7 @@ jobs:
           if [ "$current_version" = "$latest_version" ]; then
               matching=true;
           else
-              echo ${{ github }}
+              echo '${{ toJSON(github) }}'
               git remote add github "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git"
               git checkout -b bump-versions-${{ github.job }}
               cat versions.json | jq --arg v "$latest_version" '.runner = ($v)' > tmp.json
