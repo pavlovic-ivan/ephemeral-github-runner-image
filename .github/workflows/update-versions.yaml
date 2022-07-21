@@ -1,13 +1,13 @@
 name: Check For Latest Versions
 
-# on:
-#   schedule:
-#     - cron:  '*/5 * * * *'
-
 on:
-  push:
-    branches:
-      - main
+  schedule:
+    - cron:  '*/15 * * * *'
+
+# on:
+#   push:
+#     branches:
+#       - main
 
 jobs:
   check-version:
