@@ -4,11 +4,6 @@ on:
   schedule:
     - cron:  '*/15 * * * *'
 
-# on:
-#   push:
-#     branches:
-#       - main
-
 jobs:
   check-version:
     runs-on: ubuntu-20.04
@@ -42,7 +37,8 @@ jobs:
         if: ${{ steps.compare-versions.outputs.matching == 'false'}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh pr create --title "[bot] Bump versions" --body "Versions bumped" -B main -H bump-versions-${{ github.run_id }}
-          gh workflow run lint.yaml --ref bump-versions-${{ github.run_id }}
+        run: gh pr create --title "[bot] Bump versions" --body "Versions bumped" -B main -H bump-versions-${{ github.run_id }}
+      - name: Run Linter Workflow
+        if: ${{ steps.compare-versions.outputs.matching == 'false'}}
+        uses: pavlovic-ivan/ephemeral-github-runner-image/.github/workflows/lint.yaml@bump-versions-${{ github.run_id }}
 
