@@ -44,5 +44,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh pr create --title "[bot] Bump versions" --body "Versions bumped" -B main -H bump-versions-${{ github.run_id }}
-          gh workflow run lint.yml --ref bump-versions-${{ github.run_id }}
+          gh workflow run lint.yaml --ref bump-versions-${{ github.run_id }}
 
