@@ -4,9 +4,14 @@ on:
   schedule:
     - cron:  '*/15 * * * *'
 
+env:
+  NEW_BRANCH: bump-versions-${{ github.run_id }}
+
 jobs:
   check-version:
     runs-on: ubuntu-20.04
+    outputs:
+      matching: ${{ steps.compare-versions.outputs.matching }}
     steps:
       - name: Checkout Packer Project
         uses: actions/checkout@v3
@@ -24,12 +29,12 @@ jobs:
           else
               git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
               git config --global user.email "username@users.noreply.github.com"
-              git checkout -b bump-versions-${{ github.run_id }}
+              git checkout -b $NEW_BRANCH
               cat versions.json | jq --arg v "$latest_version" '.runner = ($v)' > tmp.json
               cat tmp.json > versions.json
               rm tmp.json
               git commit -a -m "${{ env.CI_COMMIT_MESSAGE }}"
-              git push origin bump-versions-${{ github.run_id }}
+              git push origin $NEW_BRANCH
               matching=false
           fi
           echo "::set-output name=matching::$matching"
@@ -37,8 +42,10 @@ jobs:
         if: ${{ steps.compare-versions.outputs.matching == 'false'}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh pr create --title "[bot] Bump versions" --body "Versions bumped" -B main -H bump-versions-${{ github.run_id }}
-      - name: Run Linter Workflow
-        if: ${{ steps.compare-versions.outputs.matching == 'false'}}
-        uses: pavlovic-ivan/ephemeral-github-runner-image/.github/workflows/lint.yaml@bump-versions-${{ github.run_id }}
+        run: gh pr create --title "[bot] Bump versions" --body "Versions bumped" -B main -H $NEW_BRANCH
+
+  call-linter:
+    needs: check-version
+    if: ${{ needs.check-version.outputs.matching == 'false'}}
+    uses: pavlovic-ivan/ephemeral-github-runner-image/.github/workflows/lint.yaml@$NEW_BRANCH
 
