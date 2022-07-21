@@ -3,6 +3,7 @@ name: lint
 on:
   pull_request:
   push:
+  workflow_dispatch:
 
 jobs:
   validate-gcp:
