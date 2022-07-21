@@ -2,7 +2,7 @@ name: Check For Latest Versions
 
 on:
   schedule:
-    - cron:  '*/15 * * * *'
+    - cron:  '0 0 * * *'
 
 env:
   NEW_BRANCH: bump-versions-${{ github.run_id }}

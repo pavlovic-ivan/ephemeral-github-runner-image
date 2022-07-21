@@ -9,7 +9,7 @@ packer {
 
 source "googlecompute" "runner_machine_image" {
   project_id                      = var.project
-  image_name                      = format("%s-ghr%s-nv%s", var.source_image, replace(var.runner_version, ".", ""), replace(var.nvidia_major_version, ".", ""))
+  image_name                      = format("%s-ghr%s-nv%s", var.source_image, replace(trim(var.runner_version, "v"), ".", ""), replace(var.nvidia_major_version, ".", ""))
   image_family                    = var.image_family
   ssh_username                    = "root"
   source_image                    = var.source_image

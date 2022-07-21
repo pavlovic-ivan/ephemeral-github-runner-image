@@ -8,7 +8,7 @@ packer {
 }
 
 source "amazon-ebs" "runner_machine_image" {
-  ami_name      = format("%s-ghr%s", regex_replace(var.source_image, "(ubuntu/images/((\\*)|(hvm-ssd/)))|(-\\*)|(\\.)", "" ), replace(var.runner_version, ".", ""))
+  ami_name      = format("%s-ghr%s", regex_replace(var.source_image, "(ubuntu/images/((\\*)|(hvm-ssd/)))|(-\\*)|(\\.)", "" ), replace(trim(var.runner_version, "v"), ".", ""))
   instance_type = var.instance_type
   region        = var.region
   source_ami_filter {
