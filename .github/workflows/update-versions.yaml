@@ -10,8 +10,6 @@ env:
 jobs:
   check-version:
     runs-on: ubuntu-20.04
-    outputs:
-      matching: ${{ steps.compare-versions.outputs.matching }}
     steps:
       - name: Checkout Packer Project
         uses: actions/checkout@v3
@@ -43,9 +41,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh pr create --title "[bot] Bump versions" --body "Versions bumped" -B main -H $NEW_BRANCH
-
-  call-linter:
-    needs: check-version
-    if: ${{ needs.check-version.outputs.matching == 'false'}}
-    uses: pavlovic-ivan/ephemeral-github-runner-image/.github/workflows/lint.yaml@${{ env.NEW_BRANCH }}
 
