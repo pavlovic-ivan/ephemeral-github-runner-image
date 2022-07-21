@@ -47,5 +47,5 @@ jobs:
   call-linter:
     needs: check-version
     if: ${{ needs.check-version.outputs.matching == 'false'}}
-    uses: pavlovic-ivan/ephemeral-github-runner-image/.github/workflows/lint.yaml@"${{ env.NEW_BRANCH }}"
+    uses: pavlovic-ivan/ephemeral-github-runner-image/.github/workflows/lint.yaml@${{ env.NEW_BRANCH }}
 
