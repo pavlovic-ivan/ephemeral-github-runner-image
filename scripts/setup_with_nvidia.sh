@@ -11,7 +11,7 @@ apt-get install -y build-essential ubuntu-drivers-common
 
 echo "[INFO] > Installing NVIDIA drivers"
 ubuntu-drivers autoinstall
-apt install nvidia-driver-${NVIDIA_MAJOR_VERSION}
+apt install -y nvidia-driver-${NVIDIA_MAJOR_VERSION}
 apt autoremove -y
 
 echo "[INFO] > Creating user runner with home directory"
