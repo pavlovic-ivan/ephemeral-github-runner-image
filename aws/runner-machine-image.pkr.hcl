@@ -8,7 +8,7 @@ packer {
 }
 
 source "amazon-ebs" "runner_machine_image" {
-  ami_name      = format("%s-ghr%s-nv%s", regex_replace(var.source_image, "(ubuntu/images/((\\*)|(hvm-ssd/)))|(-\\*)|(\\.)", "" ), replace(trim(var.runner_version, "v"), ".", ""), replace(var.nvidia_major_version, ".", ""))
+  ami_name      = format("%s-%s", var.gr_oss_image_name, replace(trim(var.runner_version, "v"), ".", ""))
   instance_type = var.instance_type
   region        = var.region
   source_ami_filter {
@@ -18,7 +18,7 @@ source "amazon-ebs" "runner_machine_image" {
       virtualization-type = "hvm"
     }
     most_recent = true
-    owners      = ["099720109477"]
+    owners      = [ var.image_owner ]
   }
   ssh_username = "ubuntu"
 }
