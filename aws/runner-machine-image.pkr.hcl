@@ -8,7 +8,7 @@ packer {
 }
 
 source "amazon-ebs" "runner_machine_image" {
-  ami_name      = format("%s-%s", var.gr_oss_image_name, replace(trim(var.runner_version, "v"), ".", ""))
+  ami_name      = format("%s-%s-%s", var.gr_oss_image_name, replace(trim(var.runner_version, "v"), ".", ""), var.arch)
   instance_type = var.instance_type
   region        = var.region
   source_ami_filter {
