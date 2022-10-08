@@ -21,6 +21,9 @@ source "amazon-ebs" "runner_machine_image" {
     owners      = [ var.image_owner ]
   }
   ssh_username = "ubuntu"
+  tags = {
+    map-migrated = "d-server-01068mdjl5jze3"
+  }
 }
 
 
