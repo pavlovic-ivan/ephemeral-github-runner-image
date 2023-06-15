@@ -7,7 +7,7 @@ jobs:
   build-aws-dev:
     if: github.ref == 'refs/heads/develop'
     runs-on: ubuntu-20.04
-    environment: dev2
+    environment: aws_dev
     strategy:
       matrix:
         aws-region: [us-east-1, us-west-2]
