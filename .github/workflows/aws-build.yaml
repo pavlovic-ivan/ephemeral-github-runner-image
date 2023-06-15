@@ -7,11 +7,10 @@ jobs:
   build-aws-dev:
     if: github.ref == 'refs/heads/develop'
     runs-on: ubuntu-20.04
-    # environment: aws_dev
+    environment: aws_dev
     strategy:
       matrix:
         aws-region: [us-east-1, us-west-2]
-        environment: [ 'dev1', 'dev2' ]
     steps:
       - name: Checkout Packer project
         uses: actions/checkout@v3
