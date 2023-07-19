@@ -5,7 +5,7 @@ on:
 
 jobs:
   build-aws-dev:
-    if: github.ref == 'refs/heads/develop'
+    # if: github.ref == 'refs/heads/develop'
     runs-on: ubuntu-20.04
     environment: aws_dev
     strategy:
