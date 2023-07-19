@@ -14,6 +14,7 @@ curl --silent -fsSL https://github.com/actions/runner/releases/download/v${RUNNE
 chown -R runner:runner ~runner/runner
 
 echo "[INFO] > Installing packages"
+curl --silent -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
 # curl --silent -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
