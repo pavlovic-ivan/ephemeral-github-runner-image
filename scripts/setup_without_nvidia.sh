@@ -14,10 +14,12 @@ curl --silent -fsSL https://github.com/actions/runner/releases/download/v${RUNNE
 chown -R runner:runner ~runner/runner
 
 echo "[INFO] > Installing packages"
-curl --silent -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] \
-  https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
-  | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+# curl --silent -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+# echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] \
+#   https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
+#   | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 curl --silent -LO "https://dl.k8s.io/release/$(curl --silent -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/$(dpkg --print-architecture)/kubectl" 
 install -o runner -g runner -m 0755 kubectl /usr/local/bin/kubectl
