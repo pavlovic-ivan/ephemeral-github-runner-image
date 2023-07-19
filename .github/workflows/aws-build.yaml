@@ -24,7 +24,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           packer build -force -var-file=./aws/amd64/values.pkrvars.hcl -var "region=${{ matrix.aws-region }}" -var "runner_version=$(cat versions.json | jq -r '.runner')" ./aws
-          packer build -force -var-file=./aws/arm64/values.pkrvars.hcl -var "region=${{ matrix.aws-region }}" -var "runner_version=$(cat versions.json | jq -r '.runner')" ./aws
+          # packer build -force -var-file=./aws/arm64/values.pkrvars.hcl -var "region=${{ matrix.aws-region }}" -var "runner_version=$(cat versions.json | jq -r '.runner')" ./aws
 
   build-aws-prod:
     if: github.ref == 'refs/heads/main'
