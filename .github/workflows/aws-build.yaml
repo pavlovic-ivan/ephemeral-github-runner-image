@@ -23,7 +23,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          packer build -force -var-file=./aws/amd64/values.pkrvars.hcl -var "region=${{ matrix.aws-region }}" -var "runner_version=$(cat versions.json | jq -r '.runner')" ./aws
+          # packer build -force -var-file=./aws/amd64/values.pkrvars.hcl -var "region=${{ matrix.aws-region }}" -var "runner_version=$(cat versions.json | jq -r '.runner')" ./aws
           packer build -force -var-file=./aws/arm64/values.pkrvars.hcl -var "region=${{ matrix.aws-region }}" -var "runner_version=$(cat versions.json | jq -r '.runner')" ./aws
 
   build-aws-prod:
@@ -45,5 +45,5 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          packer build -force -var-file=./aws/amd64/values.pkrvars.hcl -var "region=${{ matrix.aws-region }}" -var "runner_version=$(cat versions.json | jq -r '.runner')" ./aws
+          # packer build -force -var-file=./aws/amd64/values.pkrvars.hcl -var "region=${{ matrix.aws-region }}" -var "runner_version=$(cat versions.json | jq -r '.runner')" ./aws
           packer build -force -var-file=./aws/arm64/values.pkrvars.hcl -var "region=${{ matrix.aws-region }}" -var "runner_version=$(cat versions.json | jq -r '.runner')" ./aws
