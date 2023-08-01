@@ -2,10 +2,12 @@ name: Packer Build for AWS
 
 on:
   workflow_dispatch:
+  push:
+    branches: [build-parquetsharp-ami]
 
 jobs:
   build-aws-dev:
-    if: github.ref == 'refs/heads/develop'
+    # if: github.ref == 'refs/heads/develop'
     runs-on: ubuntu-20.04
     environment: aws_dev
     strategy:
