@@ -19,9 +19,11 @@ sudo mkdir -p /opt/microsoft/powershell/7
 sudo tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7
 sudo chmod +x /opt/microsoft/powershell/7/pwsh
 sudo ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh
+sudo chown -R runner:runner /usr/bin/pwsh
 
 sudo chown -R runner:runner /usr/share
 curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh ./get-docker.sh
 sudo chmod 666 /var/run/docker.sock
+sudo chown -R runner:runner /var/run/docker.sock
 sudo systemctl start docker
