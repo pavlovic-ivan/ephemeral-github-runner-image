@@ -26,4 +26,5 @@ curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh ./get-docker.sh
 sudo chmod 666 /var/run/docker.sock
 sudo chown -R runner:runner /var/run/docker.sock
+sudo usermod -aG docker runner
 sudo systemctl start docker
