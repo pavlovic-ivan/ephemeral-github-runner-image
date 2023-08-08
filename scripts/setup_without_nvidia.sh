@@ -14,17 +14,16 @@ curl -fsSL https://github.com/actions/runner/releases/download/v${RUNNER_VERSION
 chown -R runner:runner ~runner/runner
 
 echo "[INFO] > Installing packages"
-curl -L -o /tmp/powershell.tar.gz https://github.com/PowerShell/PowerShell/releases/download/v7.3.6/powershell-7.3.6-linux-arm64.tar.gz
-sudo mkdir -p /opt/microsoft/powershell/7
-sudo tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7
-sudo chmod +x /opt/microsoft/powershell/7/pwsh
-sudo ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh
-sudo chown -R runner:runner /usr/bin/pwsh
+# curl -L -o /tmp/powershell.tar.gz https://github.com/PowerShell/PowerShell/releases/download/v7.3.6/powershell-7.3.6-linux-arm64.tar.gz
+# mkdir -p /opt/microsoft/powershell/7
+# tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7
+# chmod +x /opt/microsoft/powershell/7/pwsh
+# ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh
+# chown -R runner:runner /usr/bin/pwsh
 
-sudo chown -R runner:runner /usr/share
-curl -fsSL https://get.docker.com -o get-docker.sh
-sudo sh ./get-docker.sh
-sudo chmod 666 /var/run/docker.sock
-sudo chown -R runner:runner /var/run/docker.sock
-sudo usermod -aG docker runner
-sudo systemctl start docker
+mkdir -p /opt/microsoft/powershell/${POWERSHELL_MAJOR_VERSION}
+curl -fsSL https://github.com/PowerShell/PowerShell/releases/download/v${POWERSHELL_FULL_VERSION}/powershell-${POWERSHELL_FULL_VERSION}-linux-${ARCH}.tar.gz | tar -C /opt/microsoft/powershell/${POWERSHELL_MAJOR_VERSION} -xzf -
+chown -R root:root /opt/microsoft/powershell/${POWERSHELL_MAJOR_VERSION}
+ln -s /opt/microsoft/powershell/${POWERSHELL_MAJOR_VERSION}/pwsh /usr/bin/
+chmod -h 755 /usr/bin/pwsh
+chown -R runner:runner /usr/share

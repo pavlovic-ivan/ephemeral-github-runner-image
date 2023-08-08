@@ -7,3 +7,4 @@ variable "nvidia_major_version" { type = string }
 variable "script" { type = string }
 variable "image_owner" { type = string }
 variable "gr_oss_image_name" { type = string }
+variable "powershell_version" { type = string}

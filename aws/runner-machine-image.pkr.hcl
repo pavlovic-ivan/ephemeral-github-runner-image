@@ -36,7 +36,9 @@ build {
     environment_vars = [
       "RUNNER_VERSION=${trim(var.runner_version, "v")}",
       "NVIDIA_MAJOR_VERSION=${var.nvidia_major_version}",
-      "ARCH=${var.arch == "amd64" ? "x64" : var.arch}"
+      "ARCH=${var.arch == "amd64" ? "x64" : var.arch}",
+      "POWERSHELL_FULL_VERSION=${var.powershell_version}",
+      "POWERSHELL_MAJOR_VERSION=${substr(var.powershell_version, 0, 1)}"
     ]
     script          = "${path.cwd}/scripts/${var.script}"
     execute_command = "chmod +x {{ .Path }}; sudo sh -c '{{ .Vars }} {{ .Path }}'"
