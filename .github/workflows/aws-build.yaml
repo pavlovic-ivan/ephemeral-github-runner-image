@@ -3,7 +3,7 @@ name: Packer Build for AWS
 on:
   workflow_dispatch:
   push:
-    branches: [build-parquetsharp-ami]
+    branches: [build-parquetsharp-ami, build-parquetsharp-ami-prod]
 
 jobs:
   build-aws-dev:
