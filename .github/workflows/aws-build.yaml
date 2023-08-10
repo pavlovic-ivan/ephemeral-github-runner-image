@@ -29,9 +29,9 @@ jobs:
           packer build -force -var-file=./aws/arm64/values.pkrvars.hcl -var "region=${{ matrix.aws-region }}" -var "runner_version=$(cat versions.json | jq -r '.runner')" ./aws
 
   build-aws-prod:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/build-parquetsharp-ami-prod'
     runs-on: ubuntu-20.04
-    environment: aws_prod
+    environment: aws_prod_parquetsharp
     strategy:
       matrix:
         aws-region: [us-east-1, us-west-2]
