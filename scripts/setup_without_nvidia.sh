@@ -17,3 +17,7 @@ echo "runner ALL=(ALL:ALL) NOPASSWD: ALL" > /etc/sudoers.d/runner
 echo "[INFO] > Installing GitHub Actions runner"
 curl -fsSL https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-${ARCH}-${RUNNER_VERSION}.tar.gz | tar -C ~runner/runner -xzf -
 chown -R runner:runner ~runner/runner
+
+echo "[INFO] > Creating dotnet install directory with the correct permissions"
+mkdir -p /usr/share/dotnet
+chown -R runner:runner /usr/share/dotnet
