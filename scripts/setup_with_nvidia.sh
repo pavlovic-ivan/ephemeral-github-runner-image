@@ -25,3 +25,8 @@ chown -R runner:runner ~runner/runner
 
 echo "[INFO] > Installing GitHub Actions runner dependencies"
 ~runner/runner/bin/installdependencies.sh
+
+
+echo "[INFO] > Creating dotnet install directory with the correct permissions"
+mkdir -p /usr/share/dotnet
+chown -R runner:runner /usr/share/dotnet
