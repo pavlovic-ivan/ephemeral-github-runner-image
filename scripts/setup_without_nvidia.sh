@@ -18,6 +18,13 @@ echo "[INFO] > Installing GitHub Actions runner"
 curl -fsSL https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-${ARCH}-${RUNNER_VERSION}.tar.gz | tar -C ~runner/runner -xzf -
 chown -R runner:runner ~runner/runner
 
+echo "[INFO] > Installing packages"
+mkdir -p /opt/microsoft/powershell/${POWERSHELL_MAJOR_VERSION}
+curl -fsSL https://github.com/PowerShell/PowerShell/releases/download/v${POWERSHELL_FULL_VERSION}/powershell-${POWERSHELL_FULL_VERSION}-linux-${ARCH}.tar.gz | tar -C /opt/microsoft/powershell/${POWERSHELL_MAJOR_VERSION} -xzf -
+chown -R root:root /opt/microsoft/powershell/${POWERSHELL_MAJOR_VERSION}
+ln -s /opt/microsoft/powershell/${POWERSHELL_MAJOR_VERSION}/pwsh /usr/bin/
+chmod -h 755 /usr/bin/pwsh
+chown -R runner:runner /usr/share
 echo "[INFO] > Creating dotnet install directory with the correct permissions"
 mkdir -p /usr/share/dotnet
 chown -R runner:runner /usr/share/dotnet
