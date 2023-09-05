@@ -1,5 +1,5 @@
 source_image            = "Deep Learning AMI GPU TensorFlow 2.8.2 (Ubuntu 20.04) 20220731"
-instance_type           = "p3.2xlarge"
+instance_type           = "g4dn.xlarge"
 arch                    = "amd64"
 nvidia_major_version    = "510"
 script                  = "setup_without_nvidia.sh"
