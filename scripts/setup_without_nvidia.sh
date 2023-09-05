@@ -28,3 +28,7 @@ chown -R runner:runner /usr/share
 echo "[INFO] > Creating dotnet install directory with the correct permissions"
 mkdir -p /usr/share/dotnet
 chown -R runner:runner /usr/share/dotnet
+
+echo "[INFO] > Installing Docker"
+curl -fsSL https://get.docker.com | sh
+usermod -aG docker runner
