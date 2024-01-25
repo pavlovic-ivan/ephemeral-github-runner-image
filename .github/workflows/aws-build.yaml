@@ -15,7 +15,7 @@ jobs:
         aws-region: [us-east-1, us-west-2]
     steps:
       - name: Checkout Packer project
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Initialize Packer Plugin Binaries:AWS
         run: packer init ./aws
@@ -37,7 +37,7 @@ jobs:
         aws-region: [us-east-1, us-west-2]
     steps:
       - name: Checkout Packer project
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Initialize Packer Plugin Binaries:AWS
         run: packer init ./aws
