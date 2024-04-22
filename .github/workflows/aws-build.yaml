@@ -5,7 +5,7 @@ on:
     inputs:
       env:
         type: choice
-        description: Environment
+        description: Select environment depending of the project for which you're building the image
         options: 
         - aws_dev
         - aws_prod
