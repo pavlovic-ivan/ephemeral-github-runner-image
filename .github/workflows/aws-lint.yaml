@@ -9,8 +9,11 @@ jobs:
   validate-aws:
     runs-on: ubuntu-20.04
     strategy:
+      fail-fast: false
       matrix:
-        aws-region: [us-east-1, us-west-2]
+        include:
+          - params: {"aws-region": "us-east-1", "arch": "amd64"}
+          - params: {"aws-region": "us-east-1", "arch": "arm64"}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -20,5 +23,4 @@ jobs:
 
       - name: Validate Template:AWS
         run: |
-          packer validate -var-file=./aws/amd64/values.pkrvars.hcl -var "region=${{ matrix.aws-region }}" -var "runner_version=$(cat versions.json | jq -r '.runner')" ./aws
-          packer validate -var-file=./aws/arm64/values.pkrvars.hcl -var "region=${{ matrix.aws-region }}" -var "runner_version=$(cat versions.json | jq -r '.runner')" ./aws
+          packer validate -var-file=./aws/${{ matrix.params.arch }}/values.pkrvars.hcl -var "region=${{ matrix.params.aws-region }}" -var "runner_version=$(cat versions.json | jq -r '.runner')" ./aws
