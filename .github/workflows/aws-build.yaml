@@ -19,9 +19,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - params: {"aws-region": "us-east-1", "arch": "amd64"}
-          - params: {"aws-region": "us-west-2", "arch": "arm64"}
+        aws-region: [us-east-1, us-west-2]
+        arch: [amd64, amd64]
 
     steps:
       - name: Checkout Packer project
