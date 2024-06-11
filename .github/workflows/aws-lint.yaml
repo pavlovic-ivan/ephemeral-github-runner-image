@@ -7,20 +7,24 @@ on:
 
 jobs:
   validate-aws:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - params: {"aws-region": "us-east-1", "arch": "amd64"}
-          - params: {"aws-region": "us-east-1", "arch": "arm64"}
+        aws-region: [us-east-1, us-west-2]
+        arch: [amd64, amd64]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Setup packer
+        uses: hashicorp/setup-packer@v3
+        with:
+          version: latest
         
       - name: Initialize Packer Plugin Binaries:AWS
         run: packer init ./aws
 
       - name: Validate Template:AWS
         run: |
-          packer validate -var-file=./aws/${{ matrix.params.arch }}/values.pkrvars.hcl -var "region=${{ matrix.params.aws-region }}" -var "runner_version=$(cat versions.json | jq -r '.runner')" ./aws
+          packer validate -var-file=./aws/${{ matrix.arch }}/values.pkrvars.hcl -var "region=${{ matrix.aws-region }}" -var "runner_version=$(cat versions.json | jq -r '.runner')" ./aws

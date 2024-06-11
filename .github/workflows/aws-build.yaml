@@ -14,7 +14,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     environment: ${{ inputs.env }}
     strategy:
       fail-fast: false
@@ -26,6 +26,11 @@ jobs:
       - name: Checkout Packer project
         uses: actions/checkout@v4
 
+      - name: Setup packer
+        uses: hashicorp/setup-packer@v3
+        with:
+          version: latest
+
       - name: Initialize Packer Plugin Binaries:AWS
         run: packer init ./aws
 
@@ -34,5 +39,5 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          packer build -force -var-file=./aws/${{ matrix.params.arch }}/values.pkrvars.hcl -var "region=${{ matrix.params.aws-region }}" -var "runner_version=$(cat versions.json | jq -r '.runner')" ./aws
+          packer build -force -var-file=./aws/${{ matrix.arch }}/values.pkrvars.hcl -var "region=${{ matrix.aws-region }}" -var "runner_version=$(cat versions.json | jq -r '.runner')" ./aws
 
