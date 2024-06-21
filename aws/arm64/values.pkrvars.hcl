@@ -1,5 +1,5 @@
-source_image            = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-arm64-server-20230517"
-instance_type           = "t4g.xlarge"
+source_image            = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-arm64-server-20240614"
+instance_type           = "t4g.micro"
 arch                    = "arm64"
 script                  = "setup_without_nvidia.sh"
 nvidia_major_version    = ""
