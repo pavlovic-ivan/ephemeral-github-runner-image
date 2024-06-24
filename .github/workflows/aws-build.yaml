@@ -2,18 +2,34 @@ name: Packer Build for AWS
 
 on:
   workflow_dispatch:
+    inputs:
+      env:
+        type: choice
+        description: Select environment depending of the project for which you're building the image
+        options: 
+        - aws_dev
+        - aws_prod
+        - aws_dev_parquetsharp
+        - aws_prod_parquetsharp
 
 jobs:
-  build-aws-dev:
-    if: github.ref == 'refs/heads/develop'
-    runs-on: ubuntu-20.04
-    environment: aws_dev
+  build:
+    runs-on: ubuntu-24.04
+    environment: ${{ inputs.env }}
     strategy:
+      fail-fast: false
       matrix:
         aws-region: [us-east-1, us-west-2]
+        arch: [amd64, amd64]
+
     steps:
       - name: Checkout Packer project
         uses: actions/checkout@v4
+
+      - name: Setup packer
+        uses: hashicorp/setup-packer@v3
+        with:
+          version: latest
 
       - name: Initialize Packer Plugin Binaries:AWS
         run: packer init ./aws
@@ -23,27 +39,5 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          packer build -force -var-file=./aws/amd64/values.pkrvars.hcl -var "region=${{ matrix.aws-region }}" -var "runner_version=$(cat versions.json | jq -r '.runner')" ./aws
-          packer build -force -var-file=./aws/arm64/values.pkrvars.hcl -var "region=${{ matrix.aws-region }}" -var "runner_version=$(cat versions.json | jq -r '.runner')" ./aws
+          packer build -force -var-file=./aws/${{ matrix.arch }}/values.pkrvars.hcl -var "region=${{ matrix.aws-region }}" -var "runner_version=$(cat versions.json | jq -r '.runner')" ./aws
 
-  build-aws-prod:
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-20.04
-    environment: aws_prod
-    strategy:
-      matrix:
-        aws-region: [us-east-1, us-west-2]
-    steps:
-      - name: Checkout Packer project
-        uses: actions/checkout@v4
-
-      - name: Initialize Packer Plugin Binaries:AWS
-        run: packer init ./aws
-
-      - name: Build Image:AWS
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |
-          packer build -force -var-file=./aws/amd64/values.pkrvars.hcl -var "region=${{ matrix.aws-region }}" -var "runner_version=$(cat versions.json | jq -r '.runner')" ./aws
-          packer build -force -var-file=./aws/arm64/values.pkrvars.hcl -var "region=${{ matrix.aws-region }}" -var "runner_version=$(cat versions.json | jq -r '.runner')" ./aws
