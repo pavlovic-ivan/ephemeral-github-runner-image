@@ -22,7 +22,7 @@ jobs:
 
     steps:
       - name: Checkout Packer project
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup packer
         uses: hashicorp/setup-packer@v3
